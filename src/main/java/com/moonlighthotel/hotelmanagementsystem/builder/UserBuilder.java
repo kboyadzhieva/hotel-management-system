@@ -5,6 +5,7 @@ import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -16,16 +17,20 @@ import java.util.stream.Collectors;
 public class UserBuilder {
 
     @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
     private final RoleService roleService;
 
     public User buildUserByAdmin(User user) {
         return User.builder()
                 .email(user.getEmail())
+                .password(user.getPassword())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .phone(user.getPhone())
                 .roles(user.getRoles().stream()
-                        .map(role -> roleService.findByName("ROLE" + role.getName().toUpperCase()))
+                        .map(role -> roleService.findByName("ROLE_" + role.getName().toUpperCase()))
                         .collect(Collectors.toSet()))
                 .created(Instant.now())
                 .build();
@@ -34,6 +39,7 @@ public class UserBuilder {
     public User buildUserByClient(User user, Role role) {
         return User.builder()
                 .email(user.getEmail())
+                .password(user.getPassword())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .phone(user.getPhone())
@@ -46,11 +52,12 @@ public class UserBuilder {
         return User.builder()
                 .id(id)
                 .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
                 .name(user.getName())
                 .surname(user.getSurname())
                 .phone(user.getPhone())
                 .roles(user.getRoles().stream()
-                        .map(role -> roleService.findByName("ROLE" + role.getName().toUpperCase()))
+                        .map(role -> roleService.findByName("ROLE_" + role.getName().toUpperCase()))
                         .collect(Collectors.toSet()))
                 .created(Instant.now())
                 .build();
