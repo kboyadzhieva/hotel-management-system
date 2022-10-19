@@ -4,13 +4,11 @@ import com.moonlighthotel.hotelmanagementsystem.converter.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.security.JwtUserDetailsService;
-import com.moonlighthotel.hotelmanagementsystem.security.encoder.JwtPasswordEncoder;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationRequest;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationResponse;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtUtil;
+import com.moonlighthotel.hotelmanagementsystem.security.validator.AuthenticationValidator;
 import com.moonlighthotel.hotelmanagementsystem.service.UserService;
-import com.moonlighthotel.hotelmanagementsystem.validator.AuthenticationValidator;
-import com.moonlighthotel.hotelmanagementsystem.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,9 +28,6 @@ public class JwtAuthenticationController {
     private AuthenticationValidator authenticationValidator;
 
     @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
     private JwtUserDetailsService userDetailsService;
 
     @Autowired
@@ -43,9 +38,6 @@ public class JwtAuthenticationController {
 
     @Autowired
     private UserConverter userConverter;
-
-    @Autowired
-    private JwtPasswordEncoder jwtPasswordEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;

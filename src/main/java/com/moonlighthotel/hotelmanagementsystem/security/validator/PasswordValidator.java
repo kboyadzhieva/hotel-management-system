@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.validator;
+package com.moonlighthotel.hotelmanagementsystem.security.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.security.encoder.JwtPasswordEncoder;
 import lombok.AllArgsConstructor;

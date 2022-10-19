@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.validator;
+package com.moonlighthotel.hotelmanagementsystem.security.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.AuthenticationFailException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
@@ -20,22 +20,30 @@ public class AuthenticationValidator {
     private final PasswordValidator passwordValidator;
 
     public void validateAuthenticationRequest(JwtAuthenticationRequest authenticationRequest) {
+        validateAuthenticationRequestNotNull(authenticationRequest);
+
+        try {
+            User user = userService.findByEmail(authenticationRequest.getEmail());
+            validateIfPasswordsMatch(authenticationRequest, user);
+        } catch (RecordNotFoundException e) {
+            throw new AuthenticationFailException("Incorrect email or password", "email or password");
+        }
+    }
+
+    public void validateAuthenticationRequestNotNull(JwtAuthenticationRequest authenticationRequest) {
         if (authenticationRequest.getEmail() == null) {
             throw new AuthenticationFailException("Incorrect email or password", "email or password");
         } else if (authenticationRequest.getPassword() == null) {
             throw new AuthenticationFailException("Incorrect email or password", "email or password");
-        } else {
-            try {
-                User user = userService.findByEmail(authenticationRequest.getEmail());
-                boolean doPasswordsMatch = passwordValidator.
-                        doPasswordsMatch(authenticationRequest.getPassword(), user.getPassword());
+        }
+    }
 
-                if (!doPasswordsMatch) {
-                    throw new AuthenticationFailException("Incorrect email or password", "email or password");
-                }
-            } catch (RecordNotFoundException e) {
-                throw new AuthenticationFailException("Incorrect email or password", "email or password");
-            }
+    public void validateIfPasswordsMatch(JwtAuthenticationRequest authenticationRequest, User user) {
+        boolean doPasswordsMatch = passwordValidator.
+                doPasswordsMatch(authenticationRequest.getPassword(), user.getPassword());
+
+        if (!doPasswordsMatch) {
+            throw new AuthenticationFailException("Incorrect email or password", "email or password");
         }
     }
 }
