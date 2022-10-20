@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 @AllArgsConstructor
 @Component
 public class UserValidator {
@@ -24,5 +26,9 @@ public class UserValidator {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new DuplicateRecordException(String.format("User with an email '%s' already exists.", email));
         }
+    }
+
+    public boolean isAdmin(HttpServletRequest httpServletRequest) {
+        return httpServletRequest.isUserInRole("ROLE_ADMIN");
     }
 }
