@@ -95,17 +95,4 @@ public class UserServiceImplTest {
         verify(userBuilder, times(1)).buildUserByClient(user, role);
         verify(userRepository, times(1)).save(user);
     }
-
-    @Test
-    public void verifyDeleteById() {
-        Long id = 1L;
-        User user = User.builder().id(id).build();
-
-        when(userRepository.findById(any())).thenReturn(Optional.of(user));
-
-        userService.deleteById(user.getId());
-
-        verify(userRepository, times(1)).findById(id);
-        verify(userRepository, times(1)).deleteById(id);
-    }
 }
