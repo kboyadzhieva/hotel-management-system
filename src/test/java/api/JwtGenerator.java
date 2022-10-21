@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.api;
+package api;
 
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationRequest;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationResponse;

@@ -24,7 +24,7 @@ public class UserValidator {
 
     public void validateEmail(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new DuplicateRecordException(String.format("User with an email '%s' already exists.", email));
+            throw new DuplicateRecordException(String.format("User with email '%s' already exists.", email));
         }
     }
 

@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.api;
+package api;
 
 import io.restassured.specification.RequestSpecification;
 
@@ -9,12 +9,14 @@ public abstract class BaseApiTest {
     private final JwtGenerator jwtGenerator = new JwtGenerator();
 
     public RequestSpecification getClientWithAdminToken() {
-        String token = jwtGenerator.generateTokenAdmin();
-        return given().header("Authorization", "Bearer " + token);
+        String tokenAdmin = jwtGenerator.generateTokenAdmin();
+        return given()
+                .header("Authorization", "Bearer " + tokenAdmin);
     }
 
     public RequestSpecification getClientWithClientToken() {
-        String token = jwtGenerator.generateTokenClient();
-        return given().header("Authorization", "Bearer " + token);
+        String tokenClient = jwtGenerator.generateTokenClient();
+        return given()
+                .header("Authorization", "Bearer " + tokenClient);
     }
 }
