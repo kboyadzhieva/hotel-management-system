@@ -9,14 +9,13 @@ public abstract class BaseApiTest {
     private final JwtGenerator jwtGenerator = new JwtGenerator();
 
     public RequestSpecification getClientWithAdminToken() {
-        String tokenAdmin = jwtGenerator.generateTokenAdmin();
-        return given()
-                .header("Authorization", "Bearer " + tokenAdmin);
+        String token = jwtGenerator.generateTokenAdmin();
+        return given().header("Authorization", "Bearer " + token);
     }
 
     public RequestSpecification getClientWithClientToken() {
-        String tokenClient = jwtGenerator.generateTokenClient();
-        return given()
-                .header("Authorization", "Bearer " + tokenClient);
+        String token = jwtGenerator.generateTokenClient();
+        return given().header("Authorization", "Bearer " + token);
+                
     }
 }
