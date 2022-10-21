@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.api;
+package api;
 
 import io.restassured.specification.RequestSpecification;
 
@@ -16,5 +16,6 @@ public abstract class BaseApiTest {
     public RequestSpecification getClientWithClientToken() {
         String token = jwtGenerator.generateTokenClient();
         return given().header("Authorization", "Bearer " + token);
+                
     }
 }

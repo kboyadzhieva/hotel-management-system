@@ -2,6 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.UserBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
+import com.moonlighthotel.hotelmanagementsystem.model.Role;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.repository.UserRepository;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoleValidator;
@@ -65,5 +66,33 @@ public class UserServiceImplTest {
         assertThat(thrown)
                 .isInstanceOf(RecordNotFoundException.class)
                 .hasMessage(String.format("User with id '%d' does not exist.", id));
+    }
+
+    @Test
+    public void verifySaveByAdmin() {
+        User user = User.builder().email("new@mail.com").build();
+
+        when(userBuilder.buildUserByAdmin(any())).thenReturn(user);
+
+        userService.saveByAdmin(user);
+
+        verify(userValidator, times(1)).validateEmail(user.getEmail());
+        verify(userBuilder, times(1)).buildUserByAdmin(user);
+        verify(userRepository, times(1)).save(user);
+    }
+
+    @Test
+    public void verifySaveByClient() {
+        User user = User.builder().email("new@mail.com").build();
+        Role role = Role.builder().name("client").build();
+
+        when(userBuilder.buildUserByClient(any(), any())).thenReturn(user);
+        when(roleValidator.validateRoleExists(any())).thenReturn(role);
+
+        userService.saveByClient(user);
+
+        verify(userValidator, times(1)).validateEmail(user.getEmail());
+        verify(userBuilder, times(1)).buildUserByClient(user, role);
+        verify(userRepository, times(1)).save(user);
     }
 }

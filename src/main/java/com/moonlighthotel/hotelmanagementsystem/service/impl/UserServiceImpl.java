@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveByClient(User user) {
         userValidator.validateEmail(user.getEmail());
-        Role role = roleValidator.validateRoleName(ROLE_NAME);
+        Role role = roleValidator.validateRoleExists(ROLE_NAME);
         User userForSave = userBuilder.buildUserByClient(user, role);
         return userRepository.save(userForSave);
     }

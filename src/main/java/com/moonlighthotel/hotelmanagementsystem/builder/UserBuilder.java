@@ -3,6 +3,7 @@ package com.moonlighthotel.hotelmanagementsystem.builder;
 import com.moonlighthotel.hotelmanagementsystem.model.Role;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.service.RoleService;
+import com.moonlighthotel.hotelmanagementsystem.validator.RoleValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,9 @@ public class UserBuilder {
     @Autowired
     private final RoleService roleService;
 
+    @Autowired
+    private final RoleValidator roleValidator;
+
     public User buildUserByAdmin(User user) {
         return User.builder()
                 .email(user.getEmail())
@@ -29,9 +33,7 @@ public class UserBuilder {
                 .name(user.getName())
                 .surname(user.getSurname())
                 .phone(user.getPhone())
-                .roles(user.getRoles().stream()
-                        .map(role -> roleService.findByName("ROLE_" + role.getName().toUpperCase()))
-                        .collect(Collectors.toSet()))
+                .roles(roleValidator.validateRoles(user.getRoles()))
                 .created(Instant.now())
                 .build();
     }

@@ -1,6 +1,6 @@
-package com.moonlighthotel.hotelmanagementsystem.api.user;
+package api.user;
 
-import com.moonlighthotel.hotelmanagementsystem.api.BaseApiTest;
+import api.BaseApiTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -9,14 +9,15 @@ import org.springframework.http.HttpStatus;
 import static io.restassured.RestAssured.given;
 
 @RunWith(JUnit4.class)
-public class GetUsersListApiTest extends BaseApiTest {
+public class GetUserByIdApiTest extends BaseApiTest {
 
-    private static final String URI = "/users";
+    private static final String URI = "/users/{id}";
 
     @Test
-    public void getUsersListWithoutTokenShouldReturnUnauthorized() {
+    public void getUserByIdWithoutTokenShouldReturnUnauthorized() {
         given()
                 .when()
+                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()
@@ -24,9 +25,10 @@ public class GetUsersListApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getUsersListWithAdminTokenShouldReturnOK() {
+    public void getUserByIdWithAdminTokenShouldReturnOK() {
         getClientWithAdminToken()
                 .when()
+                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()
@@ -34,9 +36,10 @@ public class GetUsersListApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getUsersListWithClientTokenShouldReturnForbidden() {
+    public void getUserByIdWithClientTokenShouldReturnForbidden() {
         getClientWithClientToken()
                 .when()
+                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()
