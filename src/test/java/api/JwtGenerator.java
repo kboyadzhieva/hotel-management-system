@@ -23,7 +23,6 @@ public class JwtGenerator {
     public String generateTokenClient() {
         ResponseEntity<JwtAuthenticationResponse> authenticationResponseResponseEntity
                 = restTemplate.postForEntity(TOKEN_URL, CLIENT_USER, JwtAuthenticationResponse.class);
-
         return authenticationResponseResponseEntity.getBody().getToken();
     }
 }
