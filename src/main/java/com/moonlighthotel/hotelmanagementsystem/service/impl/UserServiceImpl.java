@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user, Long id) {
+    public User update(Long id, User user) {
         userValidator.validateUserExists(id);
         userValidator.validateEmail(user.getEmail());
         User userForUpdate = userBuilder.buildUserForUpdate(user, id);
