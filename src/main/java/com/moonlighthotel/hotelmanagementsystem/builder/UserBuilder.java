@@ -45,7 +45,7 @@ public class UserBuilder {
                 .build();
     }
 
-    public User buildUserForUpdate(User user, Long id) {
+    public User buildUserForUpdate(Long id, User user) {
         return User.builder()
                 .id(id)
                 .email(user.getEmail())
