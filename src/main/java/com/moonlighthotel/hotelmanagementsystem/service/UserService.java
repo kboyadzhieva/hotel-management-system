@@ -16,7 +16,7 @@ public interface UserService {
 
     User saveByClient(User user);
 
-    User update(User user, Long id);
+    User update(Long id, User user);
 
     void deleteById(Long id);
 }

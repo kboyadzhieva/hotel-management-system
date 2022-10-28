@@ -1,6 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.converter;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
+import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.security.encoder.JwtPasswordEncoder;
@@ -42,6 +43,20 @@ public class UserConverter {
                 .surname(userRequestCreate.getSurname())
                 .phone(userRequestCreate.getPhone())
                 .roles(roleConverter.toSetOfRoles(userRequestCreate.getRoles()))
+                .created(Instant.now())
+                .build();
+    }
+
+    public User toUserByAdmin(Long id, UserRequestUpdate userRequestUpdate) {
+        return User.builder()
+                .id(id)
+                .email(userRequestUpdate.getEmail())
+                .password(passwordEncoder.getPasswordEncoder()
+                        .encode(userRequestUpdate.getPassword()))
+                .name(userRequestUpdate.getName())
+                .surname(userRequestUpdate.getSurname())
+                .phone(userRequestUpdate.getPhone())
+                .roles(roleConverter.toSetOfRoles(userRequestUpdate.getRoles()))
                 .created(Instant.now())
                 .build();
     }
