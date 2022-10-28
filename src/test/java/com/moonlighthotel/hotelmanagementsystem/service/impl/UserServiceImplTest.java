@@ -97,6 +97,21 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void verifyUpdate() {
+        Long id = 10L;
+        User user = User.builder().id(id).build();
+        User userForUpdate = User.builder().email("new@mail.com").build();
+
+        when(userRepository.findById(any())).thenReturn(Optional.of(user));
+
+        userService.update(id, userForUpdate);
+
+        verify(userValidator, times(1)).validateUserExists(id);
+        verify(userValidator, times(1)).validateEmail(userForUpdate.getEmail());
+        verify(userBuilder, times(1)).buildUserForUpdate(id, userForUpdate);
+    }
+
+    @Test
     public void verifyDeleteById() {
         Long id = 1L;
         User user = User.builder().id(id).build();

@@ -2,6 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.controller;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
+import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.service.UserService;
@@ -68,6 +69,17 @@ public class UserController {
         UserResponse userResponse = userConverter.toUserResponse(savedUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserResponse> update(@PathVariable Long id,
+                                               @RequestBody @Valid UserRequestUpdate userRequestUpdate) {
+        User user = userConverter.toUserByAdmin(id, userRequestUpdate);
+        User updatedUser = userService.update(id, user);
+        UserResponse userResponse = userConverter.toUserResponse(updatedUser);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userResponse);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

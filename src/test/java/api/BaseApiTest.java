@@ -16,6 +16,5 @@ public abstract class BaseApiTest {
     public RequestSpecification getClientWithClientToken() {
         String token = jwtGenerator.generateTokenClient();
         return given().header("Authorization", "Bearer " + token);
-                
     }
 }

@@ -1,0 +1,10 @@
+{
+  "email": "j.davidson@mail.com",
+  "password": "123456",
+  "phone": "123456789",
+  "name": "Jack",
+  "surname": "Davidson",
+  "roles": [
+    "client"
+  ]
+}
