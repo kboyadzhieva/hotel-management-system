@@ -26,8 +26,9 @@ public class Room {
     @Column(nullable = false)
     private String image;
 
-    @Column(nullable = false)
-    private Set<String> images;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "room_id")
+    private Set<Image> images;
 
     @Column(nullable = false)
     private String description;
