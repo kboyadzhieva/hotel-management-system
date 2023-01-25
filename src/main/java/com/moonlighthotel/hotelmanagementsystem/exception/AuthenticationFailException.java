@@ -1,11 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.exception;
 
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.Getter;
 
-@AllArgsConstructor
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@Getter
 public class AuthenticationFailException extends RuntimeException {
 
     private final String field;

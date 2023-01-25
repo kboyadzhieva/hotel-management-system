@@ -28,7 +28,8 @@ public class RoomValidator {
         Room foundRoom = roomRepository.findByTitle(room.getTitle());
 
         if (foundRoom != null && !foundRoom.getId().equals(id)) {
-            throw new DuplicateRecordException(String.format("Room with title '%s' already exists.", "title"));
+            throw new DuplicateRecordException(
+                    String.format("Room with title '%s' already exists.", room.getTitle()), "title");
         }
     }
 
