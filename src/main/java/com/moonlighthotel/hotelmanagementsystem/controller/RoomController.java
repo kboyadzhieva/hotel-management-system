@@ -25,6 +25,13 @@ public class RoomController {
     @Autowired
     private final RoomConverter roomConverter;
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
+        Room foundRoom = roomService.findById(id);
+        RoomResponse roomResponse = roomConverter.toRoomResponse(foundRoom);
+        return ResponseEntity.ok(roomResponse);
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RoomResponse> save(@RequestBody @Valid RoomRequest roomRequest) {
@@ -42,5 +49,12 @@ public class RoomController {
         Room updatedRoom = roomService.update(id, room);
         RoomResponse roomResponse = roomConverter.toRoomResponse(updatedRoom);
         return ResponseEntity.ok(roomResponse);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
+        roomService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
