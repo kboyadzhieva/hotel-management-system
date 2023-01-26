@@ -1,8 +1,7 @@
-package api.room;
+package api.room.delete;
 
 import api.BaseApiTest;
-import api.room.creator.RoomCreator;
-import api.room.updater.RoomUpdater;
+import api.room.helper.creator.RoomCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import io.restassured.http.ContentType;
@@ -12,28 +11,35 @@ import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
 @RunWith(JUnit4.class)
-public class UpdateRoomByClientApiTest extends BaseApiTest {
+public class DeleteRoomWithAdminTokenApiTest extends BaseApiTest {
 
     private static final String URI = "/rooms";
     private final RoomCreator roomCreator = new RoomCreator();
-    private final RoomUpdater roomUpdater = new RoomUpdater();
 
     @Test
-    public void updateRoomByClientShouldReturnForbidden() {
+    public void deleteRoomByIdWithAdminTokenShouldReturnNoContent() {
         Long savedRoomId = saveRoomBeforeTest();
-        RoomRequest updatedRoom = roomUpdater.updateRoom();
 
-        getClientWithClientToken()
-                .contentType(ContentType.JSON)
-                .body(updatedRoom)
+        getClientWithAdminToken()
                 .when()
                 .pathParam("id", savedRoomId)
-                .put(URI + "/{id}")
+                .delete(URI + "/{id}")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.FORBIDDEN.value());
+                .statusCode(HttpStatus.NO_CONTENT.value());
+    }
 
-        deleteRoomAfterTest(savedRoomId);
+    @Test
+    public void deleteRoomByNonExistentIdWithAdminTokenShouldReturnNotFound() {
+        Long id = 10000000L;
+
+        getClientWithAdminToken()
+                .when()
+                .pathParam("id", id)
+                .delete(URI + "/{id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     private Long saveRoomBeforeTest() {
@@ -50,12 +56,5 @@ public class UpdateRoomByClientApiTest extends BaseApiTest {
                         .as(RoomResponse.class);
 
         return roomResponse.getId();
-    }
-
-    private void deleteRoomAfterTest(Long id) {
-        getClientWithAdminToken()
-                .when()
-                .pathParam("id", id)
-                .delete(URI + "/{id}");
     }
 }

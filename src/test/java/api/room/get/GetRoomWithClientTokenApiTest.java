@@ -1,4 +1,4 @@
-package api.room;
+package api.room.get;
 
 import api.BaseApiTest;
 import org.junit.Test;
@@ -7,13 +7,13 @@ import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
 @RunWith(JUnit4.class)
-public class GetRoomWithAdminTokenApiTest extends BaseApiTest {
+public class GetRoomWithClientTokenApiTest extends BaseApiTest {
 
     private static final String URI = "/rooms/{id}";
 
     @Test
-    public void getRoomByIdWithAdminTokenShouldReturnOk() {
-        getClientWithAdminToken()
+    public void getRoomByIdWithClientTokenShouldReturnOk() {
+        getClientWithClientToken()
                 .when()
                 .pathParam("id", 1)
                 .get(URI)
@@ -23,8 +23,8 @@ public class GetRoomWithAdminTokenApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getRoomByInvalidIdWithAdminTokenShouldReturnBadRequest() {
-        getClientWithAdminToken()
+    public void getRoomByInvalidIdWithClientTokenShouldReturnBadRequest() {
+        getClientWithClientToken()
                 .when()
                 .pathParam("id", "a")
                 .get(URI)
@@ -34,10 +34,10 @@ public class GetRoomWithAdminTokenApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getRoomByNonExistentIdWithAdminTokenShouldReturnNotFound() {
+    public void getRoomByNonExistentIdWithClientTokenShouldReturnNotFound() {
         Long id = 10000000L;
 
-        getClientWithAdminToken()
+        getClientWithClientToken()
                 .when()
                 .pathParam("id", id)
                 .get(URI)
