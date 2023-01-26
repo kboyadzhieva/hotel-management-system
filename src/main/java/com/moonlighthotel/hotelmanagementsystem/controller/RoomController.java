@@ -50,10 +50,11 @@ public class RoomController {
         RoomResponse roomResponse = roomConverter.toRoomResponse(updatedRoom);
         return ResponseEntity.ok(roomResponse);
     }
-    
+
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         roomService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
