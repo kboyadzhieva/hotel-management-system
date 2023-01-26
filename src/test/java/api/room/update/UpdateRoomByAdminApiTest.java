@@ -1,8 +1,8 @@
-package api.room;
+package api.room.update;
 
 import api.BaseApiTest;
-import api.room.creator.RoomCreator;
-import api.room.updater.RoomUpdater;
+import api.room.helper.creator.RoomCreator;
+import api.room.helper.updater.RoomUpdater;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import io.restassured.http.ContentType;

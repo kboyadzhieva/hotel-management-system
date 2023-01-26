@@ -1,18 +1,18 @@
-package api.room.creator;
+package api.room.helper.updater;
 
 import api.ObjectCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 
-public class RoomCreator {
+public class RoomUpdater {
 
     private final ObjectCreator objectCreator = new ObjectCreator();
 
-    public RoomRequest createRoom() {
+    public RoomRequest updateRoom() {
         String content = "classpath:createRoom.json";
         return objectCreator.createObject(content, RoomRequest.class);
     }
 
-    public RoomRequest createRoomWithInvalidData() {
+    public RoomRequest updateRoomWithInvalidData() {
         String content = "classpath:createRoomWithInvalidData.json";
         return objectCreator.createObject(content, RoomRequest.class);
     }
