@@ -5,6 +5,7 @@ import com.moonlighthotel.hotelmanagementsystem.enumeration.StatusType;
 import com.moonlighthotel.hotelmanagementsystem.enumeration.ViewType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 @Entity
 @Table(name = "room_reservations")
 public class RoomReservation {
