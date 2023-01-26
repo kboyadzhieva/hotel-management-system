@@ -29,7 +29,6 @@ public class RoomController {
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {
         Room foundRoom = roomService.findById(id);
         RoomResponse roomResponse = roomConverter.toRoomResponse(foundRoom);
-
         return ResponseEntity.ok(roomResponse);
     }
 
@@ -51,4 +50,10 @@ public class RoomController {
         RoomResponse roomResponse = roomConverter.toRoomResponse(updatedRoom);
         return ResponseEntity.ok(roomResponse);
     }
+    
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
+        roomService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 }
