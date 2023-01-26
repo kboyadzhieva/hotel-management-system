@@ -1,0 +1,15 @@
+{
+  "title": "Double Room",
+  "image": "image.jpg",
+  "images": [
+    "https://image_1.jpg",
+    "https://image_2.jpg",
+    "https://image_3.jpg"
+  ],
+  "description": "The capacity of the room is for two adults and one child up to 3 years old.",
+  "facilities": "seating area, flat screen TV, toiletries, wired and wireless internet connection, safe, hairdryer, bathrobe and slippers for SPA zone",
+  "area": 24,
+  "people": 2,
+  "price": 220,
+  "count": 7
+}
