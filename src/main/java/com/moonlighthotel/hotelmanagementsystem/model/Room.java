@@ -47,4 +47,7 @@ public class Room {
 
     @Column(nullable = false)
     private Integer count;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private Set<RoomReservation> roomReservations;
 }
