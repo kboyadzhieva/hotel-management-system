@@ -2,14 +2,18 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.RoomBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
+import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
+import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
 import com.moonlighthotel.hotelmanagementsystem.model.Room;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoomRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
+import com.moonlighthotel.hotelmanagementsystem.validator.QueryParametersValidator;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoomValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,7 +21,13 @@ import java.util.List;
 public class RoomServiceImpl implements RoomService {
 
     @Autowired
+    private final DateFormatter dateFormatter;
+
+    @Autowired
     private final RoomRepository roomRepository;
+
+    @Autowired
+    private final QueryParametersValidator queryParametersValidator;
 
     @Autowired
     private final RoomValidator roomValidator;
@@ -26,8 +36,13 @@ public class RoomServiceImpl implements RoomService {
     private final RoomBuilder roomBuilder;
 
     @Override
-    public List<Room> findAll() {
-        return roomRepository.findAll();
+    public List<Room> findAllAvailableRooms(RoomFilter roomFilter) {
+        queryParametersValidator.validateQueryParameters(roomFilter);
+
+        Instant startDate = dateFormatter.stringToInstant(roomFilter.getStartDate());
+        Instant endDate = dateFormatter.stringToInstant(roomFilter.getEndDate());
+
+        return roomRepository.findAllAvailableRooms(startDate, endDate, roomFilter.getAdults(), roomFilter.getKids());
     }
 
     @Override
