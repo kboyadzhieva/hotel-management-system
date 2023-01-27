@@ -2,11 +2,10 @@ package com.moonlighthotel.hotelmanagementsystem.exception.handler;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.AuthenticationFailException;
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
+import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.exception.model.AuthenticationFailErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.exception.model.DuplicateRecordErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
+import com.moonlighthotel.hotelmanagementsystem.exception.model.*;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,5 +88,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorModel, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    private ResponseEntity<InvalidRequestErrorModel> handleInvalidRequestException(InvalidRequestException e) {
+        Map<String, Set<String>> errors = new HashMap<>();
+        Set<String> messages = new HashSet<>();
+        messages.add(e.getMessage());
+        errors.put(e.getRequestField(), messages);
+
+        InvalidRequestErrorModel errorModel = InvalidRequestErrorModel.builder()
+                .message("Invalid Request")
+                .errors(errors)
+                .build();
+
+        return new ResponseEntity<>(errorModel, HttpStatus.BAD_REQUEST);
     }
 }
