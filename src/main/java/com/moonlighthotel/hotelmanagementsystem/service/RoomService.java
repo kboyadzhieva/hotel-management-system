@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface RoomService {
 
+    List<Room> findAll();
+
     List<Room> findAllAvailableRooms(RoomFilter roomFilter);
 
     Room findById(Long id);
@@ -16,4 +18,6 @@ public interface RoomService {
     Room update(Long id, Room room);
 
     void deleteById(Long id);
+
+    List<Room> findAll(RoomFilter roomFilter);
 }

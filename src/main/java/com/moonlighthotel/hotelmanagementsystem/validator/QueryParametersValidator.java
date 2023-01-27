@@ -24,4 +24,8 @@ public class QueryParametersValidator {
 
         dateValidator.validateDates(startDate, endDate);
     }
+
+    public boolean AreThereQueryParameters(RoomFilter roomFilter) {
+        return roomFilter.haveQueryParameters();
+    }
 }

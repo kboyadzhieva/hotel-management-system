@@ -62,6 +62,6 @@ public class RoomValidator {
     }
 
     private boolean AreThereAnyRoomsAvailable(Integer roomCount, Integer reservationsCount) {
-        return reservationsCount == null || roomCount >= reservationsCount;
+        return reservationsCount == null || roomCount > reservationsCount;
     }
 }
