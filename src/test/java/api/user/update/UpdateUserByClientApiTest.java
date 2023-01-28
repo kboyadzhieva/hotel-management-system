@@ -1,8 +1,10 @@
-package api.user;
+package api.user.update;
 
 import api.BaseApiTest;
-import api.user.creator.UserCreator;
+import api.helper.creator.UserCreator;
+import api.helper.updater.UserUpdater;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
+import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import io.restassured.http.ContentType;
 import org.junit.Test;
@@ -10,46 +12,45 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
-
 @RunWith(JUnit4.class)
-public class SaveUserWithoutTokenApiTest extends BaseApiTest {
+public class UpdateUserByClientApiTest extends BaseApiTest {
 
     private static final String URI = "/users";
     private final UserCreator userCreator = new UserCreator();
+    private final UserUpdater userUpdater = new UserUpdater();
 
     @Test
-    public void saveUserWithoutTokenShouldReturnCreated() {
+    public void updateUserByClientShouldReturnForbidden() {
+        Long savedUserId = saveUserBeforeTest();
+        UserRequestUpdate user = userUpdater.updateUser();
+
+        getClientWithClientToken()
+                .contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .pathParam("id", savedUserId)
+                .put(URI + "/{id}")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+
+        deleteUserAfterTest(savedUserId);
+    }
+
+    private Long saveUserBeforeTest() {
         UserRequestCreate user = userCreator.createUser();
 
         UserResponse userResponse =
-                given()
+                getClientWithClientToken()
                         .contentType(ContentType.JSON)
                         .body(user)
                         .when()
                         .post(URI)
                         .then()
-                        .assertThat()
-                        .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .as(UserResponse.class);
 
-        Long id = userResponse.getId();
-        deleteUserAfterTest(id);
-    }
-
-    @Test
-    public void saveUserWithInvalidDataShouldReturnBadRequest() {
-        UserRequestCreate user = userCreator.createUserWithInvalidData();
-
-        given()
-                .contentType(ContentType.JSON)
-                .body(user)
-                .when()
-                .post(URI)
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+        return userResponse.getId();
     }
 
     private void deleteUserAfterTest(Long id) {

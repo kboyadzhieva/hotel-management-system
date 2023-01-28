@@ -1,7 +1,7 @@
 package api.room.delete;
 
 import api.BaseApiTest;
-import api.room.helper.creator.RoomCreator;
+import api.helper.creator.RoomCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import io.restassured.http.ContentType;

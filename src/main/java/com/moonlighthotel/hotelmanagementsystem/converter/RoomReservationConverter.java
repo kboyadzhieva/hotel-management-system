@@ -30,6 +30,9 @@ public class RoomReservationConverter {
     @Autowired
     private final DateFormatter dateFormatter;
 
+    @Autowired
+    private final RoomConverter roomConverter;
+
     public RoomReservation toRoomReservation(Long id, RoomReservationRequestSave roomReservationRequestSave) {
         User foundUser = userService.findById(roomReservationRequestSave.getUser());
         Room foundRoom = roomService.findById(id);
@@ -72,6 +75,7 @@ public class RoomReservationConverter {
                 .adults(roomReservation.getAdults())
                 .kids(roomReservation.getKids())
                 .price(roomReservation.getPrice())
+                .room(roomConverter.toRoomResponse(roomReservation.getRoom()))
                 .build();
     }
 

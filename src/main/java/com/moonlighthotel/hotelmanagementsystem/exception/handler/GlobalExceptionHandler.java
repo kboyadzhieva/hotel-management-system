@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -103,5 +104,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException e,
+                                                                          HttpHeaders headers, HttpStatus status,
+                                                                          WebRequest request) {
+
+        String message = String.format("Required request parameter '%s' is missing.", e.getParameterName());
+
+        Map<String, Set<String>> errors = new HashMap<>();
+        Set<String> messages = new HashSet<>();
+        messages.add(message);
+        errors.put(e.getParameterName(), messages);
+
+        InvalidRequestErrorModel error = InvalidRequestErrorModel.builder()
+                .message("Invalid Request")
+                .errors(errors)
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

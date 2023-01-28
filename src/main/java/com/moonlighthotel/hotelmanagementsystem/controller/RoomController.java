@@ -3,6 +3,7 @@ package com.moonlighthotel.hotelmanagementsystem.controller;
 import com.moonlighthotel.hotelmanagementsystem.converter.RoomConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
+import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
 import com.moonlighthotel.hotelmanagementsystem.model.Room;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/rooms")
@@ -24,6 +27,16 @@ public class RoomController {
 
     @Autowired
     private final RoomConverter roomConverter;
+
+    @GetMapping
+    public ResponseEntity<List<RoomResponse>> findAll(RoomFilter roomFilter) {
+        List<Room> rooms = roomService.findAll(roomFilter);
+
+        List<RoomResponse> roomResponseList = rooms.stream()
+                .map(roomConverter::toRoomResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roomResponseList);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<RoomResponse> findById(@PathVariable Long id) {

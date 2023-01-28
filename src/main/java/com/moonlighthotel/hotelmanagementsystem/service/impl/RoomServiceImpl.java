@@ -36,9 +36,12 @@ public class RoomServiceImpl implements RoomService {
     private final RoomBuilder roomBuilder;
 
     @Override
-    public List<Room> findAllAvailableRooms(RoomFilter roomFilter) {
-        queryParametersValidator.validateQueryParameters(roomFilter);
+    public List<Room> findAll() {
+        return roomRepository.findAll();
+    }
 
+    @Override
+    public List<Room> findAllAvailableRooms(RoomFilter roomFilter) {
         Instant startDate = dateFormatter.stringToInstant(roomFilter.getStartDate());
         Instant endDate = dateFormatter.stringToInstant(roomFilter.getEndDate());
 
@@ -72,5 +75,15 @@ public class RoomServiceImpl implements RoomService {
     public void deleteById(Long id) {
         Room foundRoom = findById(id);
         roomRepository.deleteById(foundRoom.getId());
+    }
+
+    public List<Room> findAll(RoomFilter roomFilter) {
+        boolean hasParameters = queryParametersValidator.AreThereQueryParameters(roomFilter);
+
+        if (!hasParameters) {
+            return findAll();
+        } else {
+            return findAllAvailableRooms(roomFilter);
+        }
     }
 }
