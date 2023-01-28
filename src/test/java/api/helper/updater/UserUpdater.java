@@ -1,4 +1,4 @@
-package api.user.updater;
+package api.helper.updater;
 
 import api.ObjectCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;

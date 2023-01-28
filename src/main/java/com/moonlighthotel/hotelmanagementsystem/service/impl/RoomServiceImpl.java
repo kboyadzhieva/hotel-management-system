@@ -42,8 +42,6 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> findAllAvailableRooms(RoomFilter roomFilter) {
-        queryParametersValidator.validateQueryParameters(roomFilter);
-
         Instant startDate = dateFormatter.stringToInstant(roomFilter.getStartDate());
         Instant endDate = dateFormatter.stringToInstant(roomFilter.getEndDate());
 

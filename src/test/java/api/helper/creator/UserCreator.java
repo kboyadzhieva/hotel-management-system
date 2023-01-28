@@ -1,4 +1,4 @@
-package api.user.creator;
+package api.helper.creator;
 
 import api.ObjectCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;

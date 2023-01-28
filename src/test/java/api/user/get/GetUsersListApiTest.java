@@ -1,4 +1,4 @@
-package api.user;
+package api.user.get;
 
 import api.BaseApiTest;
 import org.junit.Test;
@@ -9,15 +9,14 @@ import org.springframework.http.HttpStatus;
 import static io.restassured.RestAssured.given;
 
 @RunWith(JUnit4.class)
-public class GetUserByIdApiTest extends BaseApiTest {
+public class GetUsersListApiTest extends BaseApiTest {
 
-    private static final String URI = "/users/{id}";
+    private static final String URI = "/users";
 
     @Test
-    public void getUserByIdWithoutTokenShouldReturnUnauthorized() {
+    public void getUsersListWithoutTokenShouldReturnUnauthorized() {
         given()
                 .when()
-                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()
@@ -25,10 +24,9 @@ public class GetUserByIdApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getUserByIdWithAdminTokenShouldReturnOK() {
+    public void getUsersListWithAdminTokenShouldReturnOK() {
         getClientWithAdminToken()
                 .when()
-                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()
@@ -36,10 +34,9 @@ public class GetUserByIdApiTest extends BaseApiTest {
     }
 
     @Test
-    public void getUserByIdWithClientTokenShouldReturnForbidden() {
+    public void getUsersListWithClientTokenShouldReturnForbidden() {
         getClientWithClientToken()
                 .when()
-                .pathParam("id", 1)
                 .get(URI)
                 .then()
                 .assertThat()

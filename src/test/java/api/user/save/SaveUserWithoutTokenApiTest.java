@@ -1,7 +1,7 @@
-package api.user;
+package api.user.save;
 
 import api.BaseApiTest;
-import api.user.creator.UserCreator;
+import api.helper.creator.UserCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import io.restassured.http.ContentType;
@@ -10,18 +10,20 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
+import static io.restassured.RestAssured.given;
+
 @RunWith(JUnit4.class)
-public class SaveUserByClientApiTest extends BaseApiTest {
+public class SaveUserWithoutTokenApiTest extends BaseApiTest {
 
     private static final String URI = "/users";
     private final UserCreator userCreator = new UserCreator();
 
     @Test
-    public void saveUserByClientShouldReturnCreated() {
+    public void saveUserWithoutTokenShouldReturnCreated() {
         UserRequestCreate user = userCreator.createUser();
 
         UserResponse userResponse =
-                getClientWithClientToken()
+                given()
                         .contentType(ContentType.JSON)
                         .body(user)
                         .when()
@@ -37,10 +39,10 @@ public class SaveUserByClientApiTest extends BaseApiTest {
     }
 
     @Test
-    public void saveUserByClientWithInvalidDataShouldReturnBadRequest() {
+    public void saveUserWithInvalidDataShouldReturnBadRequest() {
         UserRequestCreate user = userCreator.createUserWithInvalidData();
 
-        getClientWithClientToken()
+        given()
                 .contentType(ContentType.JSON)
                 .body(user)
                 .when()

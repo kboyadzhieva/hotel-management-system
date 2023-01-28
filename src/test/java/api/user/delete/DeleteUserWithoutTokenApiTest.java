@@ -1,7 +1,7 @@
-package api.user;
+package api.user.delete;
 
 import api.BaseApiTest;
-import api.user.creator.UserCreator;
+import api.helper.creator.UserCreator;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import io.restassured.http.ContentType;
@@ -10,30 +10,34 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
+import static io.restassured.RestAssured.given;
+
 @RunWith(JUnit4.class)
-public class DeleteUserByAdminApiTest extends BaseApiTest {
+public class DeleteUserWithoutTokenApiTest extends BaseApiTest {
 
     private static final String URI = "/users";
     private final UserCreator userCreator = new UserCreator();
 
     @Test
-    public void validateThatDeleteUserByAdminReturnsNoContent() {
+    public void validateThatDeleteUserWithoutAuthenticationReturnsUnauthorized() {
         Long savedUserId = saveUserBeforeTest();
 
-        getClientWithAdminToken()
+        given()
                 .when()
                 .pathParam("id", savedUserId)
                 .delete(URI + "/{id}")
                 .then()
                 .assertThat()
-                .statusCode(HttpStatus.NO_CONTENT.value());
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
+
+        deleteUserAfterTest(savedUserId);
     }
 
     private Long saveUserBeforeTest() {
-        UserRequestCreate user = userCreator.createUserByAdmin();
+        UserRequestCreate user = userCreator.createUser();
 
         UserResponse userResponse =
-                getClientWithAdminToken()
+                given()
                         .contentType(ContentType.JSON)
                         .body(user)
                         .when()
@@ -43,5 +47,12 @@ public class DeleteUserByAdminApiTest extends BaseApiTest {
                         .as(UserResponse.class);
 
         return userResponse.getId();
+    }
+
+    private void deleteUserAfterTest(Long id) {
+        getClientWithAdminToken()
+                .when()
+                .pathParam("id", id)
+                .delete(URI + "/{id}");
     }
 }
