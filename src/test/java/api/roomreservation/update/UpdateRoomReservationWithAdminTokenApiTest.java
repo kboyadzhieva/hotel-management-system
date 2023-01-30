@@ -1,8 +1,11 @@
 package api.roomreservation.update;
 
 import api.BaseApiTest;
+import api.helper.creator.RoomCreator;
 import api.helper.creator.RoomReservationCreator;
 import api.helper.updater.RoomReservationUpdater;
+import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomReservationRequestSave;
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomReservationRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomReservationSaveResponse;
@@ -15,32 +18,35 @@ import org.springframework.http.HttpStatus;
 @RunWith(JUnit4.class)
 public class UpdateRoomReservationWithAdminTokenApiTest extends BaseApiTest {
 
-    private static final String URI = "/rooms/{id}/reservations";
+    private static final String URI = "/rooms";
+    private final RoomCreator roomCreator = new RoomCreator();
     private final RoomReservationCreator roomReservationCreator = new RoomReservationCreator();
     private final RoomReservationUpdater roomReservationUpdater = new RoomReservationUpdater();
 
     @Test
     public void updateRoomReservationWithAdminTokenShouldReturnOk() {
-        Long savedRoomReservationId = saveRoomReservationBeforeTest();
+        Long id = saveRoomBeforeTest();
+        Long rid = saveRoomReservationBeforeTest(id);
         RoomReservationRequestUpdate updatedRoom = roomReservationUpdater.updateRoomReservation();
 
         getClientWithAdminToken()
                 .contentType(ContentType.JSON)
                 .body(updatedRoom)
                 .when()
-                .pathParam("id", 1L)
-                .pathParam("rid", savedRoomReservationId)
-                .put(URI + "/{rid}")
+                .pathParam("id", id)
+                .pathParam("rid", rid)
+                .put(URI + "/{id}/reservations/{rid}")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK.value());
 
-        deleteRoomReservationAfterTest(savedRoomReservationId);
+        deleteRoomAfterTest(id);
     }
 
     @Test
     public void updateRoomReservationWithInvalidDataByAdminShouldReturnBadRequest() {
-        Long savedRoomReservationId = saveRoomReservationBeforeTest();
+        Long id = saveRoomBeforeTest();
+        Long rid = saveRoomReservationBeforeTest(id);
         RoomReservationRequestUpdate updatedRoom = roomReservationUpdater
                 .updateRoomReservationWithInvalidData();
 
@@ -48,18 +54,19 @@ public class UpdateRoomReservationWithAdminTokenApiTest extends BaseApiTest {
                 .contentType(ContentType.JSON)
                 .body(updatedRoom)
                 .when()
-                .pathParam("id", 1L)
-                .pathParam("rid", savedRoomReservationId)
-                .put(URI + "/{rid}")
+                .pathParam("id", id)
+                .pathParam("rid", rid)
+                .put(URI + "/{id}/reservations/{rid}")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
 
-        deleteRoomReservationAfterTest(savedRoomReservationId);
+        deleteRoomAfterTest(id);
     }
 
     @Test
     public void updateNonExistentRoomReservationWithAdminTokenShouldReturnNotFound() {
+        Long id = saveRoomBeforeTest();
         Long rid = 10000020L;
         RoomReservationRequestUpdate updatedRoom = roomReservationUpdater
                 .updateRoomReservationWithInvalidData();
@@ -68,15 +75,33 @@ public class UpdateRoomReservationWithAdminTokenApiTest extends BaseApiTest {
                 .contentType(ContentType.JSON)
                 .body(updatedRoom)
                 .when()
-                .pathParam("id", 1L)
+                .pathParam("id", id)
                 .pathParam("rid", rid)
-                .put(URI + "/{rid}")
+                .put(URI + "/{id}/reservations/{rid}")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND.value());
+
+        deleteRoomAfterTest(id);
     }
 
-    private Long saveRoomReservationBeforeTest() {
+    private Long saveRoomBeforeTest() {
+        RoomRequest room = roomCreator.createRoom();
+
+        RoomResponse roomResponse =
+                getClientWithAdminToken()
+                        .contentType(ContentType.JSON)
+                        .body(room)
+                        .when()
+                        .post(URI)
+                        .then()
+                        .extract()
+                        .as(RoomResponse.class);
+
+        return roomResponse.getId();
+    }
+
+    private Long saveRoomReservationBeforeTest(Long id) {
         RoomReservationRequestSave roomReservation = roomReservationCreator.createRoomReservation();
 
         RoomReservationSaveResponse roomReservationResponse =
@@ -84,8 +109,8 @@ public class UpdateRoomReservationWithAdminTokenApiTest extends BaseApiTest {
                         .contentType(ContentType.JSON)
                         .body(roomReservation)
                         .when()
-                        .pathParam("id", 1L)
-                        .post(URI)
+                        .pathParam("id", id)
+                        .post(URI + "/{id}/reservations")
                         .then()
                         .extract()
                         .as(RoomReservationSaveResponse.class);
@@ -93,11 +118,10 @@ public class UpdateRoomReservationWithAdminTokenApiTest extends BaseApiTest {
         return roomReservationResponse.getId();
     }
 
-    private void deleteRoomReservationAfterTest(Long rid) {
+    private void deleteRoomAfterTest(Long id) {
         getClientWithAdminToken()
                 .when()
-                .pathParam("id", 1L)
-                .pathParam("rid", rid)
-                .delete(URI + "/{rid}");
+                .pathParam("id", id)
+                .delete(URI + "/{id}");
     }
 }
