@@ -61,11 +61,11 @@ public class RoomReservationConverter {
                 .endDate(dateFormatter.stringToInstant(roomReservationRequestUpdate.getEndDate()))
                 .adults(roomReservationRequestUpdate.getAdults())
                 .kids(roomReservationRequestUpdate.getKids())
-                .typeBed(BedType.valueOf(roomReservationRequestUpdate.getTypeBed()))
-                .view(ViewType.valueOf(roomReservationRequestUpdate.getView()))
+                .typeBed(BedType.findByName(roomReservationRequestUpdate.getTypeBed()))
+                .view(ViewType.findByName(roomReservationRequestUpdate.getView()))
                 .room(foundRoom)
                 .user(foundUser)
-                .status(StatusType.valueOf(Integer.toString(roomReservationRequestUpdate.getStatus())))
+                .status(StatusType.valueOf(roomReservationRequestUpdate.getStatus()))
                 .build();
     }
 
