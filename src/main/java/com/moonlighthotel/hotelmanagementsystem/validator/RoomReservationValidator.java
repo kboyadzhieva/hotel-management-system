@@ -1,7 +1,5 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
-import com.moonlighthotel.hotelmanagementsystem.enumeration.BedType;
-import com.moonlighthotel.hotelmanagementsystem.enumeration.ViewType;
 import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
 import com.moonlighthotel.hotelmanagementsystem.model.Room;
 import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
@@ -30,8 +28,6 @@ public class RoomReservationValidator {
         validateDates(roomReservation.getStartDate(), roomReservation.getEndDate());
         validateNumberOfGuests(foundRoom, roomReservation);
         roomValidator.validateAreThereAnyRoomsAvailable(foundRoom, roomReservation);
-        BedType.findByName(roomReservation.getTypeBed().name());
-        ViewType.findByName(roomReservation.getView().name());
     }
 
     private void validateDates(Instant startDate, Instant endDate) {
