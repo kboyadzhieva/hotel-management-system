@@ -2,6 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.controller;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.RoomReservationConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomReservationRequestSave;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomReservationResponse;
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomReservationSaveResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomReservationService;
@@ -21,6 +22,15 @@ public class RoomReservationController {
 
     @Autowired
     private final RoomReservationConverter roomReservationConverter;
+
+    @GetMapping(value = "/{rid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<RoomReservationResponse> findById(@PathVariable Long id, @PathVariable Long rid) {
+        RoomReservation roomReservation = roomReservationService.findById(id, rid);
+        RoomReservationResponse roomReservationResponse = roomReservationConverter
+                .toRoomReservationResponse(roomReservation);
+        return ResponseEntity.ok(roomReservationResponse);
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
