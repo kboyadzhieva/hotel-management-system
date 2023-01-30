@@ -33,6 +33,9 @@ public class RoomReservationConverter {
     @Autowired
     private final RoomConverter roomConverter;
 
+    @Autowired
+    private final UserConverter userConverter;
+
     public RoomReservation toRoomReservation(Long id, RoomReservationRequestSave roomReservationRequestSave) {
         User foundUser = userService.findById(roomReservationRequestSave.getUser());
         Room foundRoom = roomService.findById(id);
@@ -58,11 +61,11 @@ public class RoomReservationConverter {
                 .endDate(dateFormatter.stringToInstant(roomReservationRequestUpdate.getEndDate()))
                 .adults(roomReservationRequestUpdate.getAdults())
                 .kids(roomReservationRequestUpdate.getKids())
-                .typeBed(BedType.valueOf(roomReservationRequestUpdate.getTypeBed()))
-                .view(ViewType.valueOf(roomReservationRequestUpdate.getView()))
+                .typeBed(BedType.findByName(roomReservationRequestUpdate.getTypeBed()))
+                .view(ViewType.findByName(roomReservationRequestUpdate.getView()))
                 .room(foundRoom)
                 .user(foundUser)
-                .status(StatusType.valueOf(Integer.toString(roomReservationRequestUpdate.getStatus())))
+                .status(StatusType.valueOf(roomReservationRequestUpdate.getStatus()))
                 .build();
     }
 
@@ -87,11 +90,13 @@ public class RoomReservationConverter {
                 .days(roomReservation.getDays())
                 .adults(roomReservation.getAdults())
                 .kids(roomReservation.getKids())
-                .typeBed(roomReservation.getTypeBed().name())
-                .view(roomReservation.getView().name())
+                .typeBed(roomReservation.getTypeBed().name().toLowerCase())
+                .view(roomReservation.getView().name().toLowerCase())
                 .price(roomReservation.getPrice())
                 .created(dateFormatter.instantToString(roomReservation.getCreated()))
-                .status(roomReservation.getStatus().name())
+                .status(roomReservation.getStatus().name().toLowerCase())
+                .room(roomConverter.toRoomResponse(roomReservation.getRoom()))
+                .user(userConverter.toUserResponse(roomReservation.getUser()))
                 .build();
     }
 }
