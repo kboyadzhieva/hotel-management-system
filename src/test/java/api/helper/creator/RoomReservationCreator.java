@@ -11,4 +11,9 @@ public class RoomReservationCreator {
         String content = "classpath:createRoomReservation.json";
         return objectCreator.createObject(content, RoomReservationRequestSave.class);
     }
+
+    public RoomReservationRequestSave createRoomReservationWithInvalidData() {
+        String content = "classpath:createRoomReservationWithInvalidData.json";
+        return objectCreator.createObject(content, RoomReservationRequestSave.class);
+    }
 }
