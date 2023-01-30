@@ -40,7 +40,7 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         roomValidator.validateRoomExists(id);
         return roomReservationRepository.findById(rid)
                 .orElseThrow(() -> new RecordNotFoundException(String
-                        .format("Room reservation with id %d does not exist", rid)));
+                        .format("Room reservation with id %d does not exist.", rid)));
     }
 
     @Override
