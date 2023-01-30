@@ -25,6 +25,15 @@ public class RoomReservationController {
     @Autowired
     private final RoomReservationConverter roomReservationConverter;
 
+    @GetMapping(value = "/{rid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<RoomReservationResponse> findById(@PathVariable Long id, @PathVariable Long rid) {
+        RoomReservation roomReservation = roomReservationService.findById(id, rid);
+        RoomReservationResponse roomReservationResponse = roomReservationConverter
+                .toRoomReservationResponse(roomReservation);
+        return ResponseEntity.ok(roomReservationResponse);
+    }
+
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     public ResponseEntity<RoomReservationSaveResponse> save(@PathVariable Long id,
@@ -36,13 +45,6 @@ public class RoomReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationSaveResponse);
     }
 
-    @DeleteMapping(value = "/{rid}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<HttpStatus> delete(@PathVariable Long id, @PathVariable Long rid) {
-        roomReservationService.deleteById(id, rid);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
     @PutMapping(value = "/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<RoomReservationResponse> update(@PathVariable Long id, @PathVariable Long rid,
@@ -51,5 +53,12 @@ public class RoomReservationController {
         RoomReservation updatedRoomReservation = roomReservationService.update(id, rid, roomReservation);
         RoomReservationResponse roomReservationResponse = roomReservationConverter.toRoomReservationResponse(updatedRoomReservation);
         return ResponseEntity.ok(roomReservationResponse);
+    }
+    
+    @DeleteMapping(value = "/{rid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<HttpStatus> delete(@PathVariable Long id, @PathVariable Long rid) {
+        roomReservationService.deleteById(id, rid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
