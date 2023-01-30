@@ -34,7 +34,7 @@ public class RoomReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationSaveResponse);
     }
 
-    @DeleteMapping(value = "{rid}")
+    @DeleteMapping(value = "/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<HttpStatus> delete(@PathVariable Long id, @PathVariable Long rid) {
         roomReservationService.deleteById(id, rid);
