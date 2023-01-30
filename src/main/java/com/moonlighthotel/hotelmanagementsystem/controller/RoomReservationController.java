@@ -7,6 +7,7 @@ import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,13 @@ public class RoomReservationController {
         RoomReservation savedRoomReservation = roomReservationService.save(id, roomReservation);
         RoomReservationSaveResponse roomReservationSaveResponse = roomReservationConverter
                 .toRoomReservationSaveResponse(savedRoomReservation);
-        return ResponseEntity.ok(roomReservationSaveResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationSaveResponse);
+    }
+
+    @DeleteMapping(value = "{rid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<HttpStatus> delete(@PathVariable Long id, @PathVariable Long rid) {
+        roomReservationService.deleteById(id, rid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
