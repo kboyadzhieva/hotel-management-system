@@ -45,8 +45,8 @@ public class RoomReservationConverter {
                 .endDate(dateFormatter.stringToInstant(roomReservationRequestSave.getEndDate()))
                 .adults(roomReservationRequestSave.getAdults())
                 .kids(roomReservationRequestSave.getKids())
-                .typeBed(BedType.valueOf(roomReservationRequestSave.getTypeBed()))
-                .view(ViewType.valueOf(roomReservationRequestSave.getView()))
+                .typeBed(BedType.findByName(roomReservationRequestSave.getTypeBed()))
+                .view(ViewType.findByName(roomReservationRequestSave.getView()))
                 .room(foundRoom)
                 .user(foundUser)
                 .build();
