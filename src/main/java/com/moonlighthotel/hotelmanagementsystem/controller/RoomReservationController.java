@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping(value = "rooms/{id}/reservations")
 @AllArgsConstructor
@@ -25,6 +28,16 @@ public class RoomReservationController {
     @Autowired
     private final RoomReservationConverter roomReservationConverter;
 
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<List<RoomReservationResponse>> findAll(@PathVariable Long id) {
+        List<RoomReservation> roomReservations = roomReservationService.findAllByRoomId(id);
+        List<RoomReservationResponse> roomReservationResponseList = roomReservations.stream()
+                .map(roomReservationConverter::toRoomReservationResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roomReservationResponseList);
+    }
+        
     @GetMapping(value = "/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<RoomReservationResponse> findById(@PathVariable Long id, @PathVariable Long rid) {

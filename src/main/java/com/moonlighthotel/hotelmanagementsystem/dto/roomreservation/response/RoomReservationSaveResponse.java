@@ -1,5 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RoomReservationSaveResponse {
 
     private Long id;
