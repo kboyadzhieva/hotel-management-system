@@ -13,8 +13,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.http.HttpStatus;
 
-import static io.restassured.RestAssured.given;
-
 @RunWith(JUnit4.class)
 public class DeleteRoomReservationWithClientTokenApiTest extends BaseApiTest {
 
@@ -27,7 +25,7 @@ public class DeleteRoomReservationWithClientTokenApiTest extends BaseApiTest {
         Long id = saveRoomBeforeTest();
         Long rid = saveRoomReservationBeforeTest(id);
 
-        given()
+        getClientWithClientToken()
                 .when()
                 .pathParam("id", id)
                 .pathParam("rid", rid)
