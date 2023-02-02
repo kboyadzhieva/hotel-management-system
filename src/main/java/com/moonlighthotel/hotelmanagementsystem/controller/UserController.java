@@ -6,7 +6,9 @@ import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpda
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.User;
 import com.moonlighthotel.hotelmanagementsystem.service.UserService;
+import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import com.moonlighthotel.hotelmanagementsystem.validator.UserValidator;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping(value = "/users")
 @RestController
+@Tag(name = SwaggerConfiguration.USER_TAG)
 public class UserController {
 
     @Autowired

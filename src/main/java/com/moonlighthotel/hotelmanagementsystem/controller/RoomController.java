@@ -6,6 +6,8 @@ import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
 import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
 import com.moonlighthotel.hotelmanagementsystem.model.Room;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
+import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/rooms")
 @AllArgsConstructor
+@Tag(name = SwaggerConfiguration.ROOM_TAG)
 public class RoomController {
 
     @Autowired
