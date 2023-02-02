@@ -82,6 +82,6 @@ public class RoomReservationController {
         RoomReservation summarizedRoomReservation = roomReservationService.summarize(id, roomReservation);
         RoomReservationSaveResponse roomReservationResponse = roomReservationConverter
                 .toRoomReservationSaveResponse(summarizedRoomReservation);
-        return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(roomReservationResponse);
     }
 }
