@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 @RunWith(JUnit4.class)
 public class SaveRoomReservationWithoutTokenApiTest {
 
-    private static final String URI = "/{id}/reservations";
+    private static final String URI = "/rooms/{id}/reservations";
     private final RoomReservationCreator roomReservationCreator = new RoomReservationCreator();
 
     @Test
