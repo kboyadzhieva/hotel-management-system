@@ -54,6 +54,18 @@ public class GetRoomReservationsListWithAdminTokenApiTest extends BaseApiTest {
         deleteRoomAfterTest(id);
     }
 
+    @Test
+    public void getRoomReservationsForNonExistentRoomShouldReturnNotFound() {
+        Long id = 123456789000L;
+
+        getClientWithAdminToken()
+                .pathParam("id", id)
+                .get(URI + "/{id}/reservations")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
     private Long saveRoomBeforeTest() {
         RoomRequest room = roomCreator.createRoom();
 
