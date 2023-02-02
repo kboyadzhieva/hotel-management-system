@@ -15,4 +15,6 @@ public interface RoomReservationService {
     RoomReservation update(Long id, Long rid, RoomReservation roomReservation);
 
     void deleteById(Long id, Long rid);
+
+    RoomReservation summarize(Long id, RoomReservation roomReservation);
 }
