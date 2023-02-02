@@ -64,4 +64,10 @@ public class RoomReservationServiceImpl implements RoomReservationService {
         RoomReservation foundRoomReservation = findById(id, rid);
         roomReservationRepository.deleteById(foundRoomReservation.getId());
     }
+
+    @Override
+    public RoomReservation summarize(Long id, RoomReservation roomReservation) {
+        roomReservationValidator.validateRoomReservation(id, roomReservation);
+        return roomReservationBuilder.build(roomReservation);
+    }
 }

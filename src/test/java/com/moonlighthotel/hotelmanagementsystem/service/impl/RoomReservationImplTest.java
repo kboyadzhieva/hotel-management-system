@@ -69,7 +69,7 @@ public class RoomReservationImplTest {
 
         assertThat(thrown)
                 .isInstanceOf(RecordNotFoundException.class)
-                .hasMessage(String.format("Room reservation with id %d does not exist", rid));
+                .hasMessage(String.format("Room reservation with id %d does not exist.", rid));
     }
 
     @Test

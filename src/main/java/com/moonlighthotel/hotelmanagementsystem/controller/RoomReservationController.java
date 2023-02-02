@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "rooms/{id}/reservations")
+@RequestMapping(value = "/rooms/{id}")
 @AllArgsConstructor
 public class RoomReservationController {
 
@@ -28,7 +28,7 @@ public class RoomReservationController {
     @Autowired
     private final RoomReservationConverter roomReservationConverter;
 
-    @GetMapping
+    @GetMapping(value = "/reservations")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<RoomReservationResponse>> findAll(@PathVariable Long id) {
         List<RoomReservation> roomReservations = roomReservationService.findAllByRoomId(id);
@@ -37,8 +37,8 @@ public class RoomReservationController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(roomReservationResponseList);
     }
-        
-    @GetMapping(value = "/{rid}")
+
+    @GetMapping(value = "/reservations/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<RoomReservationResponse> findById(@PathVariable Long id, @PathVariable Long rid) {
         RoomReservation roomReservation = roomReservationService.findById(id, rid);
@@ -47,7 +47,7 @@ public class RoomReservationController {
         return ResponseEntity.ok(roomReservationResponse);
     }
 
-    @PostMapping
+    @PostMapping(value = "/reservations")
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
     public ResponseEntity<RoomReservationSaveResponse> save(@PathVariable Long id,
                                                             @RequestBody RoomReservationRequestSave roomReservationRequestSave) {
@@ -58,7 +58,7 @@ public class RoomReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationSaveResponse);
     }
 
-    @PutMapping(value = "/{rid}")
+    @PutMapping(value = "/reservations/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<RoomReservationResponse> update(@PathVariable Long id, @PathVariable Long rid,
                                                           @RequestBody RoomReservationRequestUpdate roomReservationUpdate) {
@@ -67,11 +67,21 @@ public class RoomReservationController {
         RoomReservationResponse roomReservationResponse = roomReservationConverter.toRoomReservationResponse(updatedRoomReservation);
         return ResponseEntity.ok(roomReservationResponse);
     }
-    
-    @DeleteMapping(value = "/{rid}")
+
+    @DeleteMapping(value = "/reservations/{rid}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<HttpStatus> delete(@PathVariable Long id, @PathVariable Long rid) {
         roomReservationService.deleteById(id, rid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/summarize")
+    public ResponseEntity<RoomReservationSaveResponse> summarize(@PathVariable Long id,
+                                                                 @RequestBody RoomReservationRequestSave roomReservationRequestSave) {
+        RoomReservation roomReservation = roomReservationConverter.toRoomReservation(id, roomReservationRequestSave);
+        RoomReservation summarizedRoomReservation = roomReservationService.summarize(id, roomReservation);
+        RoomReservationSaveResponse roomReservationResponse = roomReservationConverter
+                .toRoomReservationSaveResponse(summarizedRoomReservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomReservationResponse);
     }
 }
