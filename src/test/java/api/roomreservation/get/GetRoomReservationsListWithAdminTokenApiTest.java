@@ -66,6 +66,16 @@ public class GetRoomReservationsListWithAdminTokenApiTest extends BaseApiTest {
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
 
+    @Test
+    public void getRoomReservationsByInvalidRoomIdWithAdminTokenShouldReturnBadRequest() {
+        getClientWithAdminToken()
+                .pathParam("id", "a")
+                .get(URI + "/{id}/reservations")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
     private Long saveRoomBeforeTest() {
         RoomRequest room = roomCreator.createRoom();
 
