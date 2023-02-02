@@ -81,7 +81,7 @@ public class RoomController {
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Create a new room")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation",
+            @ApiResponse(responseCode = "201", description = "Created",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RoomResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
