@@ -3,7 +3,7 @@ package com.moonlighthotel.hotelmanagementsystem.converter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.security.encoder.JwtPasswordEncoder;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

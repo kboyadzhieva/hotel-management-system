@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.RoomReservationBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoomReservationRepository;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoomReservationValidator;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoomValidator;

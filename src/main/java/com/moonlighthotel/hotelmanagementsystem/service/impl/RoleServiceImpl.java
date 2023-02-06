@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.Role;
+import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoleRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.RoleService;
 import lombok.AllArgsConstructor;

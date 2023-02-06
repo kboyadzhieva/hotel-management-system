@@ -3,7 +3,7 @@ package com.moonlighthotel.hotelmanagementsystem.controller;
 import com.moonlighthotel.hotelmanagementsystem.converter.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.AuthenticationFailErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.security.JwtUserDetailsService;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationRequest;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationResponse;

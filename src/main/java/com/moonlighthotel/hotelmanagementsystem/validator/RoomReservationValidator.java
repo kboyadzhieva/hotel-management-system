@@ -1,8 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
-import com.moonlighthotel.hotelmanagementsystem.model.Room;
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.builder;
 
-import com.moonlighthotel.hotelmanagementsystem.model.Role;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoleValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

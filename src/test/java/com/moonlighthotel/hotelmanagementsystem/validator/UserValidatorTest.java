@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

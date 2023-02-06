@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.builder;
 
 import com.moonlighthotel.hotelmanagementsystem.calculator.Calculator;
 import com.moonlighthotel.hotelmanagementsystem.enumeration.StatusType;
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

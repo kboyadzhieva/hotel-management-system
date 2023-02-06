@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.converter;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
-import com.moonlighthotel.hotelmanagementsystem.model.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class RoomConverter {
         return Room.builder()
                 .title(roomRequest.getTitle())
                 .image(roomRequest.getImage())
-                .images(imageConverter.toSetOfImages(roomRequest.getImages()))
+                .roomImages(imageConverter.toSetOfImages(roomRequest.getImages()))
                 .description(roomRequest.getDescription())
                 .facilities(roomRequest.getFacilities())
                 .area(roomRequest.getArea())
@@ -33,7 +33,7 @@ public class RoomConverter {
                 .id(room.getId())
                 .title(room.getTitle())
                 .image(room.getImage())
-                .images(imageConverter.toSetOfStrings(room.getImages()))
+                .images(imageConverter.toSetOfStrings(room.getRoomImages()))
                 .description(room.getDescription())
                 .facilities(room.getFacilities())
                 .area(room.getArea())

@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.service;
 
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 
 import java.util.List;
 

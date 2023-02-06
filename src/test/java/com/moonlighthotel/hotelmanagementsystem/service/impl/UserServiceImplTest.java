@@ -2,8 +2,8 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.UserBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.Role;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.repository.UserRepository;
 import com.moonlighthotel.hotelmanagementsystem.validator.RoleValidator;
 import com.moonlighthotel.hotelmanagementsystem.validator.UserValidator;
