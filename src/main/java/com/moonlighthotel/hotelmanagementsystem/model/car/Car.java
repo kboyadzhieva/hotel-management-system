@@ -1,5 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.model.car;
 
+import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
