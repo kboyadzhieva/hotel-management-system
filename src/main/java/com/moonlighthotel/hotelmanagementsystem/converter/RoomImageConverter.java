@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class ImageConverter {
+public class RoomImageConverter {
 
     public Set<RoomImage> toSetOfImages(Set<String> images) {
         return images.stream()
@@ -15,8 +15,8 @@ public class ImageConverter {
                 .collect(Collectors.toSet());
     }
 
-    public Set<String> toSetOfStrings(Set<RoomImage> roomImages) {
-        return roomImages.stream()
+    public Set<String> toSetOfStrings(Set<RoomImage> images) {
+        return images.stream()
                 .map(RoomImage::getPath)
                 .collect(Collectors.toSet());
     }

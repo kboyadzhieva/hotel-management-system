@@ -1,5 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.model.car;
 
+import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class Car {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "car_id")
-    private Set<CarImage> carImages;
+    private Set<CarImage> images;
 
     @Column(nullable = false)
     private Integer year;
