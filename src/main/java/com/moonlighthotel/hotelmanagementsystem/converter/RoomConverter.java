@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class RoomConverter {
 
     @Autowired
-    private final ImageConverter imageConverter;
+    private final RoomImageConverter imageConverter;
 
     public Room toRoom(RoomRequest roomRequest) {
         return Room.builder()
