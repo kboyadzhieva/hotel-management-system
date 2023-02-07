@@ -89,9 +89,10 @@ public class CategoryController {
         CategoryResponse categoryResponse = categoryConverter.toCategoryResponse(updatedCategory);
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponse);
     }
-    
+
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Remove a car category by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No Content",
