@@ -15,7 +15,7 @@ public class CarBuilder {
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .image(car.getImage())
-                .carImages(car.getCarImages())
+                .images(car.getImages())
                 .year(car.getYear())
                 .created(Instant.now())
                 .build();
@@ -28,7 +28,7 @@ public class CarBuilder {
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .image(car.getImage())
-                .carImages(car.getCarImages())
+                .images(car.getImages())
                 .year(car.getYear())
                 .created(Instant.now())
                 .build();
