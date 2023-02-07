@@ -66,7 +66,7 @@ public class CategoryController {
     @SecurityRequirement(name = "bearerAuth")
     @Operation(summary = "Update car category by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = CategoryResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
@@ -77,8 +77,11 @@ public class CategoryController {
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
             @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<CategoryResponse> update(@Parameter(description = "Car Category ID", content = @Content(
+    public ResponseEntity<CategoryResponse> update(@Parameter(description = "Category ID", content = @Content(
             schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
                                                    @RequestBody @Valid CategoryRequest categoryRequest) {
         Category category = categoryConverter.toCategory(categoryRequest);
