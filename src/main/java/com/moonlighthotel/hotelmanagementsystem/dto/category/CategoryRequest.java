@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -22,6 +23,7 @@ public class CategoryRequest {
 
     @NotNull(message = "Please enter the number of seats.")
     @Positive(message = "The value must be greater than 0.")
+    @Max(value = 8, message = "The number of the seats must be less or equal to 8.")
     private Integer seats;
 
     @NotNull(message = "Please enter a price per one day.")
