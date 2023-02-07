@@ -7,7 +7,7 @@ import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.Roo
 import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomReservationSaveResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomReservationService;
 import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import io.swagger.v3.oas.annotations.Operation;

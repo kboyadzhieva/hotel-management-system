@@ -1,5 +1,6 @@
-package com.moonlighthotel.hotelmanagementsystem.model;
+package com.moonlighthotel.hotelmanagementsystem.model.room;
 
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Room {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "room_id")
-    private Set<Image> images;
+    private Set<RoomImage> roomImages;
 
     @Column(nullable = false)
     private String description;

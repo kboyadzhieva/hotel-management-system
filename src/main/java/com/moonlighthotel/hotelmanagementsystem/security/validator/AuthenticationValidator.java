@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.security.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.AuthenticationFailException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import com.moonlighthotel.hotelmanagementsystem.security.jwt.JwtAuthenticationRequest;
 import com.moonlighthotel.hotelmanagementsystem.service.UserService;
 import lombok.AllArgsConstructor;

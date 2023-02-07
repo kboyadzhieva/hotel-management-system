@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.model;
+package com.moonlighthotel.hotelmanagementsystem.model.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,23 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "car_images")
+public class CarImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private String path;
 }

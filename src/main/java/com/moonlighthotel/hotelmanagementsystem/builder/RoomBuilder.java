@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.builder;
 
-import com.moonlighthotel.hotelmanagementsystem.model.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +11,7 @@ public class RoomBuilder {
                 .id(room.getId())
                 .title(room.getTitle())
                 .image(room.getImage())
-                .images(room.getImages())
+                .roomImages(room.getRoomImages())
                 .description(room.getDescription())
                 .facilities(room.getFacilities())
                 .area(room.getArea())
@@ -26,7 +26,7 @@ public class RoomBuilder {
                 .id(id)
                 .title(room.getTitle())
                 .image(room.getImage())
-                .images(room.getImages())
+                .roomImages(room.getRoomImages())
                 .description(room.getDescription())
                 .facilities(room.getFacilities())
                 .area(room.getArea())

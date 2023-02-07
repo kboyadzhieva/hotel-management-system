@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.formatter;
 
-import com.moonlighthotel.hotelmanagementsystem.model.RoomReservation;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

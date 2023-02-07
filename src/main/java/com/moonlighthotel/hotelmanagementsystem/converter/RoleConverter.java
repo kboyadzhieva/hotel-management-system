@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.converter;
 
-import com.moonlighthotel.hotelmanagementsystem.model.Role;
+import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
 import com.moonlighthotel.hotelmanagementsystem.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

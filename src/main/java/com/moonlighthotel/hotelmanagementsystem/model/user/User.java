@@ -1,5 +1,6 @@
-package com.moonlighthotel.hotelmanagementsystem.model;
+package com.moonlighthotel.hotelmanagementsystem.model.user;
 
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.repository;
 
-import com.moonlighthotel.hotelmanagementsystem.model.User;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

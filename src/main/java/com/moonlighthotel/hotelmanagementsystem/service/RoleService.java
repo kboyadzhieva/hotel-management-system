@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.service;
 
-import com.moonlighthotel.hotelmanagementsystem.model.Role;
+import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
 
 import java.util.List;
 

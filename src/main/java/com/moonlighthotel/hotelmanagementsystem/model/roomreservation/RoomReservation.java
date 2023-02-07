@@ -1,8 +1,10 @@
-package com.moonlighthotel.hotelmanagementsystem.model;
+package com.moonlighthotel.hotelmanagementsystem.model.roomreservation;
 
 import com.moonlighthotel.hotelmanagementsystem.enumeration.BedType;
 import com.moonlighthotel.hotelmanagementsystem.enumeration.StatusType;
 import com.moonlighthotel.hotelmanagementsystem.enumeration.ViewType;
+import com.moonlighthotel.hotelmanagementsystem.model.user.User;
+import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

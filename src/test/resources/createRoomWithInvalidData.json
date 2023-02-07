@@ -1,7 +1,7 @@
 {
   "title": "Double Room",
   "image": "image.jpg",
-  "images": [
+  "roomImages": [
     "https://image_1.jpg",
     "https://image_2.jpg",
     "https://image_3.jpg"

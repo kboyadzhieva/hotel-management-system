@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.model;
+package com.moonlighthotel.hotelmanagementsystem.model.room;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-@Table(name = "images")
-public class Image {
+@Table(name = "room_images")
+public class RoomImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
