@@ -89,4 +89,26 @@ public class CategoryController {
         CategoryResponse categoryResponse = categoryConverter.toCategoryResponse(updatedCategory);
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponse);
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Remove a car category by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content",
+                    content = @Content(mediaType = "")),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<HttpStatus> deleteById(@Parameter(description = "Category ID", content = @Content(
+            schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
+        categoryService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
