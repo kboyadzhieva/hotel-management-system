@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Long id, Category category) {
-        categoryValidator.validateCategory(category);
+        categoryValidator.validateCategoryForUpdate(id, category);
         Category builtCategory = categoryBuilder.build(id, category);
         return categoryRepository.save(builtCategory);
     }

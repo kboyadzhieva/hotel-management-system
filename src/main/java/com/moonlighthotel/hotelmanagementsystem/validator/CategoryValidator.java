@@ -20,6 +20,10 @@ public class CategoryValidator {
         validateTitle(category.getId(), category.getTitle());
     }
 
+    public void validateCategoryForUpdate(Long id, Category category) {
+        validateTitle(id, category.getTitle());
+    }
+
     private void validateTitle(Long id, String title) {
         Optional<Category> foundCategory = categoryRepository.findByTitle(title);
 
