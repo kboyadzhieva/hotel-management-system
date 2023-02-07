@@ -17,6 +17,7 @@ public class SwaggerConfiguration {
 
     public static final String ROOM_TAG = "Rooms";
     public static final String USER_TAG = "Users";
+    public static final String TRANSFER_TAG = "Transfers";
 
     @Bean
     public OpenAPI getOpenApi() {
