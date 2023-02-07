@@ -24,7 +24,7 @@ public class CarValidator {
 
     public void validateCar(Car car) {
         validateCategoryExists(car.getCategory());
-        validateModel(car.getId(), car.getModel());
+        validateModel(car.getModel());
     }
 
     public void validateCarForUpdate(Long id, Car car) {
@@ -35,6 +35,15 @@ public class CarValidator {
 
     private void validateCategoryExists(Category category) {
         categoryService.findById(category.getId());
+    }
+
+    private void validateModel(String model) {
+        Optional<Car> foundCar = carRepository.findByModel(model);
+
+        if (foundCar.isPresent()) {
+            throw new DuplicateRecordException(
+                    String.format("Car model '%s' already exists.", model), "model");
+        }
     }
 
     private void validateModel(Long id, String model) {
