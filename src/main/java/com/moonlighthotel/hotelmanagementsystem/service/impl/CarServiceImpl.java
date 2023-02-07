@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
     public Car findById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(String
-                        .format("A car with id %d does not exist", id)));
+                        .format("A car with id %d does not exist.", id)));
     }
 
     @Override
@@ -53,6 +53,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
-        carRepository.deleteById(id);
+        Car foundCar = findById(id);
+        carRepository.deleteById(foundCar.getId());
     }
 }
