@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         ValidationFailErrorModel errorModel = ValidationFailErrorModel.builder()
-                .message("Some fields are filled in incorrectly. Please check and try again.")
+                .message("Some of the fields are filled in incorrectly. Please check and try again.")
                 .errors(errors)
                 .build();
 
