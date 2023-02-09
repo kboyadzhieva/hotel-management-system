@@ -30,7 +30,7 @@ public class CarRequest {
     @NotBlank(message = "A model is required. Please enter the model of the car.")
     private String model;
 
-    @NotBlank(message = "An Image is required. Please add an image.")
+    @NotBlank(message = "An image is required. Please add an image.")
     @URL(message = "Please enter a valid URL.")
     @Pattern(regexp = "([^\\s]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)",
             message = "The image should be in one of the following formats: JPEG, JPG, PNG, GIF, BMP.")

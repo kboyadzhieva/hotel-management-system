@@ -37,6 +37,30 @@ public class CarController {
     @Autowired
     private final CarService carService;
 
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Create a new car")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CarResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationFailErrorModel.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<CarResponse> save(@RequestBody @Valid CarRequest carRequest) {
+        Car car = carConverter.toCar(carRequest);
+        Car savedCar = carService.save(car);
+        CarResponse carResponse = carConverter.toCarResponse(savedCar);
+        return ResponseEntity.status(HttpStatus.CREATED).body(carResponse);
+    }
+
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
@@ -45,9 +69,6 @@ public class CarController {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = CarResponse.class))}),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ValidationFailErrorModel.class))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
@@ -64,5 +85,27 @@ public class CarController {
         Car updatedCar = carService.update(id, car);
         CarResponse carResponse = carConverter.toCarResponse(updatedCar);
         return ResponseEntity.status(HttpStatus.OK).body(carResponse);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Remove a car by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content",
+                    content = @Content(mediaType = "")),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<HttpStatus> deleteById(@Parameter(description = "Car ID", content = @Content(
+            schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
+        carService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
