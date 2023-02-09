@@ -7,6 +7,7 @@ import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundEr
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
 import com.moonlighthotel.hotelmanagementsystem.service.CarService;
+import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/cars")
+@Tag(name = SwaggerConfiguration.TRANSFER_TAG)
 public class CarController {
 
     @Autowired
@@ -56,6 +59,32 @@ public class CarController {
         Car savedCar = carService.save(car);
         CarResponse carResponse = carConverter.toCarResponse(savedCar);
         return ResponseEntity.status(HttpStatus.CREATED).body(carResponse);
+    }
+
+    @PutMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Update a car by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CarResponse.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<CarResponse> update(@Parameter(description = "Car ID", content = @Content(
+            schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
+                                              @RequestBody @Valid CarRequest carRequest) {
+        Car car = carConverter.toCar(carRequest);
+        Car updatedCar = carService.update(id, car);
+        CarResponse carResponse = carConverter.toCarResponse(updatedCar);
+        return ResponseEntity.status(HttpStatus.OK).body(carResponse);
     }
 
     @DeleteMapping(value = "/{id}")
