@@ -3,12 +3,12 @@ package com.moonlighthotel.hotelmanagementsystem.controller;
 import com.moonlighthotel.hotelmanagementsystem.converter.CarConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
 import com.moonlighthotel.hotelmanagementsystem.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -44,7 +41,7 @@ public class CarController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CategoryResponse.class))}),
+                            schema = @Schema(implementation = CarResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationFailErrorModel.class))}),
@@ -59,5 +56,27 @@ public class CarController {
         Car savedCar = carService.save(car);
         CarResponse carResponse = carConverter.toCarResponse(savedCar);
         return ResponseEntity.status(HttpStatus.CREATED).body(carResponse);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Remove a car by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content",
+                    content = @Content(mediaType = "")),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<HttpStatus> deleteById(@Parameter(description = "Car ID", content = @Content(
+            schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
+        carService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
