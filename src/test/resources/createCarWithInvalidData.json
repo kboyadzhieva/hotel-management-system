@@ -1,0 +1,10 @@
+{
+  "category": "1",
+  "brand": "Brand",
+  "model": "Model",
+  "image": "http://image.jpeg",
+  "images": [
+    "image_1"
+  ],
+  "year": 2021
+}

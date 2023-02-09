@@ -11,4 +11,9 @@ public class CarCreator {
         String content = "classpath:createCar.json";
         return objectCreator.createObject(content, CarRequest.class);
     }
+
+    public CarRequest createCarWithInvalidData() {
+        String content = "classpath:createCarWithInvalidData.json";
+        return objectCreator.createObject(content, CarRequest.class);
+    }
 }
