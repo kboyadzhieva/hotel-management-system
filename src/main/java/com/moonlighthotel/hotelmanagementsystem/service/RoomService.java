@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.service;
 
 import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
-import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 
 import java.util.List;
 

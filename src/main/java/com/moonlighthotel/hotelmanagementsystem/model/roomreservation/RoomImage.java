@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.model.category;
+package com.moonlighthotel.hotelmanagementsystem.model.roomreservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,19 +12,13 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-@Table(name = "car_categories")
-public class Category {
+@Table(name = "room_images")
+public class RoomImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String title;
-
     @Column(nullable = false)
-    private Integer seats;
-
-    @Column(nullable = false)
-    private Double price;
+    private String path;
 }

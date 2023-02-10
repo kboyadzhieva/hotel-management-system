@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.service;
 
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 
 import java.util.List;
 

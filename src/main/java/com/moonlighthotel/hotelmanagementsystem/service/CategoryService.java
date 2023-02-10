@@ -1,18 +1,18 @@
 package com.moonlighthotel.hotelmanagementsystem.service;
 
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    List<Category> findAll();
+    List<CarCategory> findAll();
 
-    Category findById(Long id);
+    CarCategory findById(Long id);
 
-    Category save(Category category);
+    CarCategory save(CarCategory carCategory);
 
-    Category update(Long id, Category category);
+    CarCategory update(Long id, CarCategory carCategory);
 
     void deleteById(Long id);
 }

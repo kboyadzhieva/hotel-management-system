@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
-import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
 import lombok.AllArgsConstructor;

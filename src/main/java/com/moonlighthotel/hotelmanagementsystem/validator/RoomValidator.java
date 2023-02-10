@@ -3,7 +3,7 @@ package com.moonlighthotel.hotelmanagementsystem.validator;
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
 import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
-import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoomRepository;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoomReservationRepository;

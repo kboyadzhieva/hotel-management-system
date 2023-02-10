@@ -1,8 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import org.junit.Test;
@@ -34,10 +34,10 @@ public class CarValidatorTest {
     public void verifyValidateCar() {
         Long id = 1L;
         String model = "model";
-        Category category = Category.builder().id(id).build();
-        Car car = Car.builder().category(category).model(model).build();
+        CarCategory carCategory = CarCategory.builder().id(id).build();
+        Car car = Car.builder().carCategory(carCategory).model(model).build();
 
-        when(categoryService.findById(any(Long.class))).thenReturn(category);
+        when(categoryService.findById(any(Long.class))).thenReturn(carCategory);
         when(carRepository.findByModel(any())).thenReturn(Optional.empty());
 
         carValidator.validateCar(car);
@@ -49,8 +49,8 @@ public class CarValidatorTest {
     @Test
     public void validateThatADuplicateModelNameThrowsDuplicateRecordException() {
         String model = "model";
-        Category category = Category.builder().build();
-        Car car = Car.builder().category(category).model(model).build();
+        CarCategory carCategory = CarCategory.builder().build();
+        Car car = Car.builder().carCategory(carCategory).model(model).build();
 
         when(carRepository.findByModel(any())).thenReturn(Optional.of(car));
 
@@ -65,11 +65,11 @@ public class CarValidatorTest {
     public void verifyValidateCarForUpdate() {
         Long id = 1L;
         String model = "model";
-        Category category = Category.builder().id(id).build();
-        Car car = Car.builder().id(id).category(category).model(model).build();
+        CarCategory carCategory = CarCategory.builder().id(id).build();
+        Car car = Car.builder().id(id).carCategory(carCategory).model(model).build();
 
         when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(car));
-        when(categoryService.findById(any(Long.class))).thenReturn(category);
+        when(categoryService.findById(any(Long.class))).thenReturn(carCategory);
         when(carRepository.findByModel(any())).thenReturn(Optional.of(car));
 
         carValidator.validateCarForUpdate(id, car);
@@ -83,8 +83,8 @@ public class CarValidatorTest {
     public void validateThatADuplicateModelNameWhenUpdatingACarThrowsDuplicateRecordException() {
         Long id = 12L;
         String model = "model";
-        Category category = Category.builder().build();
-        Car car = Car.builder().id(1L).category(category).model(model).build();
+        CarCategory carCategory = CarCategory.builder().build();
+        Car car = Car.builder().id(1L).carCategory(carCategory).model(model).build();
 
         when(carRepository.findById(any(Long.class))).thenReturn(Optional.of(car));
         when(carRepository.findByModel(any())).thenReturn(Optional.of(car));
