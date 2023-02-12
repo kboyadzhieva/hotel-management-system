@@ -2,8 +2,8 @@ package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import lombok.AllArgsConstructor;
@@ -23,18 +23,18 @@ public class CarValidator {
     private final CarRepository carRepository;
 
     public void validateCar(Car car) {
-        validateCategoryExists(car.getCategory());
+        validateCategoryExists(car.getCarCategory());
         validateModel(car.getModel());
     }
 
     public void validateCarForUpdate(Long id, Car car) {
         validateCarExists(id);
-        validateCategoryExists(car.getCategory());
+        validateCategoryExists(car.getCarCategory());
         validateModel(id, car.getModel());
     }
 
-    private void validateCategoryExists(Category category) {
-        categoryService.findById(category.getId());
+    private void validateCategoryExists(CarCategory carCategory) {
+        categoryService.findById(carCategory.getId());
     }
 
     private void validateModel(String model) {

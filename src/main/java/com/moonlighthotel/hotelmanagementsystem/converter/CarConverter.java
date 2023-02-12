@@ -3,8 +3,8 @@ package com.moonlighthotel.hotelmanagementsystem.converter;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
 import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +27,10 @@ public class CarConverter {
     private final CategoryConverter categoryConverter;
 
     public Car toCar(CarRequest carRequest) {
-        Category foundCategory = categoryService.findById(carRequest.getCategory());
+        CarCategory foundCarCategory = categoryService.findById(carRequest.getCategory());
 
         return Car.builder()
-                .category(foundCategory)
+                .carCategory(foundCarCategory)
                 .brand(carRequest.getBrand())
                 .model(carRequest.getModel())
                 .image(carRequest.getImage())
@@ -48,7 +48,7 @@ public class CarConverter {
                 .images(imageConverter.toSetOfStrings(car.getImages()))
                 .year(car.getYear())
                 .created(dateFormatter.instantToString(car.getCreated()))
-                .category(categoryConverter.toCategoryResponse(car.getCategory()))
+                .category(categoryConverter.toCategoryResponse(car.getCarCategory()))
                 .build();
     }
 }

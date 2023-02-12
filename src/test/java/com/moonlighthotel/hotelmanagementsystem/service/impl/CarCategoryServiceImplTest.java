@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.CategoryBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import com.moonlighthotel.hotelmanagementsystem.repository.CategoryRepository;
 import com.moonlighthotel.hotelmanagementsystem.validator.CategoryValidator;
 import org.junit.Test;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CategoryServiceImplTest {
+public class CarCategoryServiceImplTest {
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -36,7 +36,7 @@ public class CategoryServiceImplTest {
 
     @Test
     public void verifyFindAll() {
-        when(categoryRepository.findAll()).thenReturn(List.of(Category.builder().build()));
+        when(categoryRepository.findAll()).thenReturn(List.of(CarCategory.builder().build()));
         categoryService.findAll();
 
         verify(categoryRepository, times(1)).findAll();
@@ -44,7 +44,7 @@ public class CategoryServiceImplTest {
 
     @Test
     public void validateThatFindAllReturnsAList() {
-        when(categoryRepository.findAll()).thenReturn(List.of(Category.builder().build()));
+        when(categoryRepository.findAll()).thenReturn(List.of(CarCategory.builder().build()));
 
         assertThat(categoryService.findAll()).isInstanceOf(List.class);
     }
@@ -54,7 +54,7 @@ public class CategoryServiceImplTest {
         Long id = 1L;
 
         when(categoryRepository.findById(any(Long.class)))
-                .thenReturn(Optional.of(Category.builder().build()));
+                .thenReturn(Optional.of(CarCategory.builder().build()));
         categoryService.findById(id);
 
         verify(categoryRepository, times(1)).findById(id);
@@ -76,54 +76,54 @@ public class CategoryServiceImplTest {
     @Test
     public void validateThatFindByIdReturnsCategory() {
         Long id = 1L;
-        Category category = Category.builder().id(id).build();
+        CarCategory carCategory = CarCategory.builder().id(id).build();
 
-        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(category));
-        assertThat(categoryService.findById(category.getId())).isInstanceOf(Category.class);
+        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(carCategory));
+        assertThat(categoryService.findById(carCategory.getId())).isInstanceOf(CarCategory.class);
     }
 
     @Test
     public void validateThatFindByIdReturnsCategoryAndItIsNotNull() {
         Long id = 1L;
-        Category category = Category.builder().id(id).build();
+        CarCategory carCategory = CarCategory.builder().id(id).build();
 
-        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(category));
-        assertThat(categoryService.findById(category.getId())).isNotNull();
+        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(carCategory));
+        assertThat(categoryService.findById(carCategory.getId())).isNotNull();
     }
 
     @Test
     public void verifySave() {
-        Category category = Category.builder().id(1L).build();
+        CarCategory carCategory = CarCategory.builder().id(1L).build();
 
-        when(categoryBuilder.build(any())).thenReturn(category);
+        when(categoryBuilder.build(any())).thenReturn(carCategory);
 
-        categoryService.save(category);
+        categoryService.save(carCategory);
 
-        verify(categoryValidator, times(1)).validateCategory(category);
-        verify(categoryBuilder, times(1)).build(category);
-        verify(categoryRepository, times(1)).save(category);
+        verify(categoryValidator, times(1)).validateCategory(carCategory);
+        verify(categoryBuilder, times(1)).build(carCategory);
+        verify(categoryRepository, times(1)).save(carCategory);
     }
 
     @Test
     public void verifyUpdate() {
         Long id = 1L;
-        Category category = Category.builder().id(1L).build();
+        CarCategory carCategory = CarCategory.builder().id(1L).build();
 
-        when(categoryBuilder.build(any(Long.class), any())).thenReturn(category);
+        when(categoryBuilder.build(any(Long.class), any())).thenReturn(carCategory);
 
-        categoryService.update(id, category);
+        categoryService.update(id, carCategory);
 
-        verify(categoryValidator, times(1)).validateCategoryForUpdate(id, category);
-        verify(categoryBuilder, times(1)).build(id, category);
-        verify(categoryRepository, times(1)).save(category);
+        verify(categoryValidator, times(1)).validateCategoryForUpdate(id, carCategory);
+        verify(categoryBuilder, times(1)).build(id, carCategory);
+        verify(categoryRepository, times(1)).save(carCategory);
     }
 
     @Test
     public void verifyDeleteById() {
         Long id = 1L;
-        Category category = Category.builder().id(1L).build();
+        CarCategory carCategory = CarCategory.builder().id(1L).build();
 
-        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(category));
+        when(categoryRepository.findById(any(Long.class))).thenReturn(Optional.of(carCategory));
 
         categoryService.deleteById(id);
 

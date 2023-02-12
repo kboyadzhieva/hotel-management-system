@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.CarBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarRepository;
 import com.moonlighthotel.hotelmanagementsystem.validator.CarValidator;
 import org.junit.Test;

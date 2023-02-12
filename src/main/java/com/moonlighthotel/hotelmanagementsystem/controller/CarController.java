@@ -5,7 +5,7 @@ import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import com.moonlighthotel.hotelmanagementsystem.service.CarService;
 import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import io.swagger.v3.oas.annotations.Operation;

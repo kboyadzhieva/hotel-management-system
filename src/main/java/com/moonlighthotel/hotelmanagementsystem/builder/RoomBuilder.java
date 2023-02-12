@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.builder;
 
-import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.builder;
 
-import com.moonlighthotel.hotelmanagementsystem.model.car.Car;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -11,7 +11,7 @@ public class CarBuilder {
     public Car build(Car car) {
         return Car.builder()
                 .id(car.getId())
-                .category(car.getCategory())
+                .carCategory(car.getCarCategory())
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .image(car.getImage())
@@ -24,7 +24,7 @@ public class CarBuilder {
     public Car build(Long id, Car car) {
         return Car.builder()
                 .id(id)
-                .category(car.getCategory())
+                .carCategory(car.getCarCategory())
                 .brand(car.getBrand())
                 .model(car.getModel())
                 .image(car.getImage())

@@ -4,7 +4,7 @@ import com.moonlighthotel.hotelmanagementsystem.builder.RoomBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
 import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
 import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
-import com.moonlighthotel.hotelmanagementsystem.model.room.Room;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 import com.moonlighthotel.hotelmanagementsystem.repository.RoomRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
 import com.moonlighthotel.hotelmanagementsystem.validator.QueryParametersValidator;

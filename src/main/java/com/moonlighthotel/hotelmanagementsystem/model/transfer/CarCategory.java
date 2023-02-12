@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.model.room;
+package com.moonlighthotel.hotelmanagementsystem.model.transfer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +12,19 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-@Table(name = "room_images")
-public class RoomImage {
+@Table(name = "car_categories")
+public class CarCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String title;
+
     @Column(nullable = false)
-    private String path;
+    private Integer seats;
+
+    @Column(nullable = false)
+    private Double price;
 }

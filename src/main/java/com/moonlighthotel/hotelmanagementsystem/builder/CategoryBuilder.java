@@ -1,26 +1,26 @@
 package com.moonlighthotel.hotelmanagementsystem.builder;
 
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryBuilder {
 
-    public Category build(Category category) {
-        return Category.builder()
-                .id(category.getId())
-                .title(category.getTitle())
-                .seats(category.getSeats())
-                .price(category.getPrice())
+    public CarCategory build(CarCategory carCategory) {
+        return CarCategory.builder()
+                .id(carCategory.getId())
+                .title(carCategory.getTitle())
+                .seats(carCategory.getSeats())
+                .price(carCategory.getPrice())
                 .build();
     }
 
-    public Category build(Long id, Category category) {
-        return Category.builder()
+    public CarCategory build(Long id, CarCategory carCategory) {
+        return CarCategory.builder()
                 .id(id)
-                .title(category.getTitle())
-                .seats(category.getSeats())
-                .price(category.getPrice())
+                .title(carCategory.getTitle())
+                .seats(carCategory.getSeats())
+                .price(carCategory.getPrice())
                 .build();
     }
 }

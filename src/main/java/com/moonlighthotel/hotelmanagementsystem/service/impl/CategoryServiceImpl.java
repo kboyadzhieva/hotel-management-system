@@ -2,7 +2,7 @@ package com.moonlighthotel.hotelmanagementsystem.service.impl;
 
 import com.moonlighthotel.hotelmanagementsystem.builder.CategoryBuilder;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import com.moonlighthotel.hotelmanagementsystem.repository.CategoryRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import com.moonlighthotel.hotelmanagementsystem.validator.CategoryValidator;
@@ -26,34 +26,34 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryBuilder categoryBuilder;
 
     @Override
-    public List<Category> findAll() {
+    public List<CarCategory> findAll() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category findById(Long id) {
+    public CarCategory findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(String
                         .format("Category with id %d does not exist", id)));
     }
 
     @Override
-    public Category save(Category category) {
-        categoryValidator.validateCategory(category);
-        Category builtCategory = categoryBuilder.build(category);
-        return categoryRepository.save(builtCategory);
+    public CarCategory save(CarCategory carCategory) {
+        categoryValidator.validateCategory(carCategory);
+        CarCategory builtCarCategory = categoryBuilder.build(carCategory);
+        return categoryRepository.save(builtCarCategory);
     }
 
     @Override
-    public Category update(Long id, Category category) {
-        categoryValidator.validateCategoryForUpdate(id, category);
-        Category builtCategory = categoryBuilder.build(id, category);
-        return categoryRepository.save(builtCategory);
+    public CarCategory update(Long id, CarCategory carCategory) {
+        categoryValidator.validateCategoryForUpdate(id, carCategory);
+        CarCategory builtCarCategory = categoryBuilder.build(id, carCategory);
+        return categoryRepository.save(builtCarCategory);
     }
 
     @Override
     public void deleteById(Long id) {
-        Category foundCategory = findById(id);
-        categoryRepository.deleteById(foundCategory.getId());
+        CarCategory foundCarCategory = findById(id);
+        categoryRepository.deleteById(foundCarCategory.getId());
     }
 }

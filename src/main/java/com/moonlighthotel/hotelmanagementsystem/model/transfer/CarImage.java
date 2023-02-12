@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.model.car;
+package com.moonlighthotel.hotelmanagementsystem.model.transfer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

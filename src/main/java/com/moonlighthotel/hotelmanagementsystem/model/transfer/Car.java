@@ -1,6 +1,5 @@
-package com.moonlighthotel.hotelmanagementsystem.model.car;
+package com.moonlighthotel.hotelmanagementsystem.model.transfer;
 
-import com.moonlighthotel.hotelmanagementsystem.model.category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +23,7 @@ public class Car {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private CarCategory carCategory;
 
     @Column(nullable = false)
     private String brand;
@@ -44,4 +43,7 @@ public class Car {
 
     @Column(nullable = false)
     private Instant created;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private Set<CarTransfer> carTransfers;
 }
