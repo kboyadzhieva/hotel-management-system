@@ -35,6 +35,7 @@ public class CarTransferConverter {
         return CarTransfer.builder()
                 .date(dateFormatter.stringToInstant(carTransferRequest.getDate()))
                 .created(Instant.now())
+                .seats(carTransferRequest.getSeats())
                 .user(foundUser)
                 .build();
     }

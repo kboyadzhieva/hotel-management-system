@@ -7,6 +7,7 @@ import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarTransfer;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarTransferRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CarService;
 import com.moonlighthotel.hotelmanagementsystem.service.CarTransferService;
+import com.moonlighthotel.hotelmanagementsystem.validator.CarTransferValidator;
 import com.moonlighthotel.hotelmanagementsystem.validator.CarValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class CarTransferServiceImpl implements CarTransferService {
     private final CarService carService;
 
     @Autowired
+    private final CarTransferValidator carTransferValidator;
+
+    @Autowired
     private final CarTransferBuilder carTransferBuilder;
 
     @Override
@@ -47,6 +51,7 @@ public class CarTransferServiceImpl implements CarTransferService {
     @Override
     public CarTransfer save(Long id, CarTransfer carTransfer) {
         Car foundCar = carService.findById(id);
+        carTransferValidator.validateCarTransfer(foundCar, carTransfer);
         CarTransfer builtCarTransfer = carTransferBuilder.build(foundCar, carTransfer);
         return carTransferRepository.save(builtCarTransfer);
     }
@@ -54,6 +59,7 @@ public class CarTransferServiceImpl implements CarTransferService {
     @Override
     public CarTransfer update(Long id, Long tid, CarTransfer carTransfer) {
         CarTransfer foundCarTransfer = findById(id, tid);
+        carTransferValidator.validateCarTransfer(foundCarTransfer.getCar(), carTransfer);
         CarTransfer builtCarTransfer = carTransferBuilder.build(foundCarTransfer.getId(), carTransfer);
         return carTransferRepository.save(builtCarTransfer);
     }

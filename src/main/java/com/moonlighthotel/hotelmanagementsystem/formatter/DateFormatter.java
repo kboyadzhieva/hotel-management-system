@@ -1,6 +1,5 @@
 package com.moonlighthotel.hotelmanagementsystem.formatter;
 
-import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomReservation;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -18,10 +17,14 @@ public class DateFormatter {
         return DateTimeFormatter.ISO_INSTANT.format(date);
     }
 
-    public String formatPeriod(RoomReservation roomReservation) {
-        String startDate = createFormat().format(roomReservation.getStartDate());
-        String endDate = createFormat().format(roomReservation.getEndDate());
-        return String.format("%s - %s", startDate, endDate);
+    public String formatDate(Instant date) {
+        return String.format("%s", createFormat().format(date));
+    }
+
+    public String formatPeriod(Instant startDate, Instant endDate) {
+        String formattedStartDate = createFormat().format(startDate);
+        String formattedEndDate = createFormat().format(endDate);
+        return String.format("%s - %s", formattedStartDate, formattedEndDate);
     }
 
     private DateTimeFormatter createFormat() {
