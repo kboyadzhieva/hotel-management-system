@@ -24,9 +24,6 @@ public class CarTransferRequest {
     @Max(value = 8)
     private Integer seats;
 
-    @NotBlank(message = "Please enter model.")
-    private String model;
-
     @NotNull(message = "The user is required.")
     private Long user;
 }

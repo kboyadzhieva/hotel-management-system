@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.transfer;
 
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarImage;
 import org.springframework.stereotype.Component;

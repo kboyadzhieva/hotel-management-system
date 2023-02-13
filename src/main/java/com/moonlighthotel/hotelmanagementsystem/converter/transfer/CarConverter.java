@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.transfer;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
@@ -24,7 +24,7 @@ public class CarConverter {
     private final DateFormatter dateFormatter;
 
     @Autowired
-    private final CategoryConverter categoryConverter;
+    private final CarCategoryConverter carCategoryConverter;
 
     public Car toCar(CarRequest carRequest) {
         CarCategory foundCarCategory = categoryService.findById(carRequest.getCategory());
@@ -48,7 +48,7 @@ public class CarConverter {
                 .images(imageConverter.toSetOfStrings(car.getImages()))
                 .year(car.getYear())
                 .created(dateFormatter.instantToString(car.getCreated()))
-                .category(categoryConverter.toCategoryResponse(car.getCarCategory()))
+                .category(carCategoryConverter.toCategoryResponse(car.getCarCategory()))
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.user;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
