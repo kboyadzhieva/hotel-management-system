@@ -33,6 +33,12 @@ public class CarValidator {
         validateModel(id, car.getModel());
     }
 
+    public void validateCarExists(Long id) {
+        carRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(
+                        String.format("A car with id '%s' does not exist.", id)));
+    }
+
     private void validateCategoryExists(CarCategory carCategory) {
         categoryService.findById(carCategory.getId());
     }
@@ -53,11 +59,5 @@ public class CarValidator {
             throw new DuplicateRecordException(
                     String.format("Car model '%s' already exists.", model), "model");
         }
-    }
-
-    private void validateCarExists(Long id) {
-        carRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(
-                        String.format("A Car with id '%s' does not exist.", id)));
     }
 }
