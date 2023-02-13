@@ -1,8 +1,11 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
+import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
+import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarTransfer;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import org.junit.Test;
@@ -11,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -26,6 +31,9 @@ public class CarValidatorTest {
 
     @Mock
     private CarRepository carRepository;
+
+    @Mock
+    private DateFormatter dateFormatter;
 
     @InjectMocks
     private CarValidator carValidator;
@@ -94,5 +102,36 @@ public class CarValidatorTest {
         assertThat(thrown)
                 .isInstanceOf(DuplicateRecordException.class)
                 .hasMessage(String.format("Car model '%s' already exists.", model), "model");
+    }
+
+    @Test
+    public void verifyValidateIfTheCarIsAvailable() {
+        Car car = Car.builder().id(1L).build();
+        Instant date = Instant.now().plus(2, ChronoUnit.DAYS);
+        CarTransfer carTransfer = CarTransfer.builder().date(date).build();
+
+        when(carRepository.isTheCarAvailable(any(Long.class), any())).thenReturn(true);
+        carValidator.validateIfTheCarIsAvailable(car, carTransfer);
+
+        verify(dateFormatter, times(1)).formatDate(carTransfer.getDate());
+        verify(carRepository, times(1)).isTheCarAvailable(car.getId(), date);
+    }
+
+    @Test
+    public void validateThatWhenCarIsUnavailableThrowsInvalidRequestException() {
+        String model = "model";
+        Car car = Car.builder().id(1L).model(model).build();
+        Instant date = Instant.now().plus(2, ChronoUnit.DAYS);
+        CarTransfer carTransfer = CarTransfer.builder().date(date).build();
+
+        when(carRepository.isTheCarAvailable(any(Long.class), any())).thenReturn(false);
+
+        Throwable thrown = catchThrowable(() -> carValidator.validateIfTheCarIsAvailable(car, carTransfer));
+
+        assertThat(thrown)
+                .isInstanceOf(InvalidRequestException.class)
+                .hasMessage(String
+                        .format("'%s' is not available for %s. Please enter a different date or choose another car.",
+                                car.getModel(), dateFormatter.formatDate(carTransfer.getDate())), "date");
     }
 }
