@@ -30,6 +30,9 @@ public class CarTransfer {
     @Column(nullable = false)
     private Instant created;
 
+    @Column(nullable = false)
+    private Integer seats;
+
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;

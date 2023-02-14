@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.roomreservation;
 
 import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.RoomImage;
 import org.springframework.stereotype.Component;

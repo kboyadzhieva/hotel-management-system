@@ -42,7 +42,7 @@ public class RoomValidator {
     public void validateAreThereAnyRoomsAvailable(Room room, RoomReservation roomReservation) {
         Integer reservationsCount = roomReservationRepository.countTheReservationsForASpecificRoom(
                 room.getId(), roomReservation.getStartDate(), roomReservation.getEndDate());
-        String period = dateFormatter.formatPeriod(roomReservation);
+        String period = dateFormatter.formatPeriod(roomReservation.getStartDate(), roomReservation.getEndDate());
 
         boolean AreThereAnyRoomsAvailable = AreThereAnyRoomsAvailable(room.getCount(), reservationsCount);
 

@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
-import com.moonlighthotel.hotelmanagementsystem.converter.UserConverter;
+import com.moonlighthotel.hotelmanagementsystem.converter.user.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.AuthenticationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.model.user.User;

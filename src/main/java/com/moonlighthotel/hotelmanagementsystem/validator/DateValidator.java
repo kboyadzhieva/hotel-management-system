@@ -12,6 +12,13 @@ public class DateValidator {
     private static final String END_DATE = "end_date";
     private static final String START_DATE = "start_date";
 
+    public void validateDate(Instant date) {
+        if (date.isBefore(Instant.now())) {
+            throw new InvalidRequestException(
+                    String.format("The date cannot be before '%s'.", LocalDate.now()), "date");
+        }
+    }
+
     public void validateDates(Instant startDate, Instant endDate) {
         if (endDate.isBefore(startDate)) {
             throw new InvalidRequestException("The end date cannot be before the start date.", END_DATE);

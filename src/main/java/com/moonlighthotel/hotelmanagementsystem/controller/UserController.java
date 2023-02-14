@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
-import com.moonlighthotel.hotelmanagementsystem.converter.UserConverter;
+import com.moonlighthotel.hotelmanagementsystem.converter.user.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestCreate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.request.UserRequestUpdate;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;

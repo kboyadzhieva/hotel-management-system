@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.transfer;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
@@ -6,7 +6,7 @@ import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryConverter {
+public class CarCategoryConverter {
 
     public CarCategory toCategory(CategoryRequest categoryRequest) {
         return CarCategory.builder()

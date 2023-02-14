@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.user;
 
 import com.moonlighthotel.hotelmanagementsystem.model.user.Role;
 import com.moonlighthotel.hotelmanagementsystem.service.RoleService;

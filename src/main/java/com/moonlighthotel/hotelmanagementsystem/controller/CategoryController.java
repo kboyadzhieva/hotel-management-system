@@ -1,6 +1,6 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
-import com.moonlighthotel.hotelmanagementsystem.converter.CategoryConverter;
+import com.moonlighthotel.hotelmanagementsystem.converter.transfer.CarCategoryConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
@@ -32,7 +32,7 @@ import javax.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    private final CategoryConverter categoryConverter;
+    private final CarCategoryConverter carCategoryConverter;
 
     @Autowired
     private final CategoryService categoryService;
@@ -55,9 +55,9 @@ public class CategoryController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
     public ResponseEntity<CategoryResponse> save(@RequestBody @Valid CategoryRequest categoryRequest) {
-        CarCategory carCategory = categoryConverter.toCategory(categoryRequest);
+        CarCategory carCategory = carCategoryConverter.toCategory(categoryRequest);
         CarCategory savedCarCategory = categoryService.save(carCategory);
-        CategoryResponse categoryResponse = categoryConverter.toCategoryResponse(savedCarCategory);
+        CategoryResponse categoryResponse = carCategoryConverter.toCategoryResponse(savedCarCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponse);
     }
 
@@ -84,9 +84,9 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> update(@Parameter(description = "Category ID", content = @Content(
             schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
                                                    @RequestBody @Valid CategoryRequest categoryRequest) {
-        CarCategory carCategory = categoryConverter.toCategory(categoryRequest);
+        CarCategory carCategory = carCategoryConverter.toCategory(categoryRequest);
         CarCategory updatedCarCategory = categoryService.update(id, carCategory);
-        CategoryResponse categoryResponse = categoryConverter.toCategoryResponse(updatedCarCategory);
+        CategoryResponse categoryResponse = carCategoryConverter.toCategoryResponse(updatedCarCategory);
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponse);
     }
 

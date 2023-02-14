@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.converter;
+package com.moonlighthotel.hotelmanagementsystem.converter.roomreservation;
 
 import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
 import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;

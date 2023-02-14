@@ -1,15 +1,19 @@
 package com.moonlighthotel.hotelmanagementsystem.validator;
 
 import com.moonlighthotel.hotelmanagementsystem.exception.DuplicateRecordException;
+import com.moonlighthotel.hotelmanagementsystem.exception.InvalidRequestException;
 import com.moonlighthotel.hotelmanagementsystem.exception.RecordNotFoundException;
+import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
+import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarTransfer;
 import com.moonlighthotel.hotelmanagementsystem.repository.CarRepository;
 import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -22,6 +26,9 @@ public class CarValidator {
     @Autowired
     private final CarRepository carRepository;
 
+    @Autowired
+    private final DateFormatter dateFormatter;
+
     public void validateCar(Car car) {
         validateCategoryExists(car.getCarCategory());
         validateModel(car.getModel());
@@ -31,6 +38,23 @@ public class CarValidator {
         validateCarExists(id);
         validateCategoryExists(car.getCarCategory());
         validateModel(id, car.getModel());
+    }
+
+    public void validateCarExists(Long id) {
+        carRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(
+                        String.format("A car with id '%s' does not exist.", id)));
+    }
+
+    public void validateIfTheCarIsAvailable(Car car, CarTransfer carTransfer) {
+        String date = dateFormatter.formatDate(carTransfer.getDate());
+        boolean isTheCarAvailable = isTheCarAvailable(car.getId(), carTransfer.getDate());
+
+        if (!isTheCarAvailable) {
+            throw new InvalidRequestException(String
+                    .format("'%s' is not available for %s. Please enter a different date or choose another car.",
+                            car.getModel(), date), "date");
+        }
     }
 
     private void validateCategoryExists(CarCategory carCategory) {
@@ -55,9 +79,7 @@ public class CarValidator {
         }
     }
 
-    private void validateCarExists(Long id) {
-        carRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(
-                        String.format("A Car with id '%s' does not exist.", id)));
+    private boolean isTheCarAvailable(Long id, Instant date) {
+        return carRepository.isTheCarAvailable(id, date);
     }
 }
