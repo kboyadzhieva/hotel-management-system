@@ -28,7 +28,7 @@ public class CarTransferValidator {
         if (carTransfer.getSeats() > categorySeats) {
             throw new InvalidRequestException(
                     String.format("In the '%s' category each car has only %d seats. " +
-                                    "Please enter a number less than %d or choose a car from another category.",
+                                    "Please enter a number less than or equal to %d or choose a car from another category.",
                             car.getCarCategory().getTitle(), categorySeats, categorySeats), "seats");
         }
     }
