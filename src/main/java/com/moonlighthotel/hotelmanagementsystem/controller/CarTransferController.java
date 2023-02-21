@@ -88,4 +88,29 @@ public class CarTransferController {
         CarTransferResponse carTransferResponse = carTransferConverter.toCarTransferResponse(savedCarTransfer);
         return ResponseEntity.status(HttpStatus.CREATED).body(carTransferResponse);
     }
+
+    @DeleteMapping(value = "/{tid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Remove a transfer by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content", content = {@Content(mediaType = "")}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<HttpStatus> delete(@Parameter(description = "Car ID",
+            content = @Content(schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
+                                             @Parameter(description = "Transfer ID",
+                                                     content = @Content(schema = @Schema(
+                                                             type = "integer", format = "")))
+                                             @PathVariable Long tid) {
+        carTransferService.deleteById(id, tid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
