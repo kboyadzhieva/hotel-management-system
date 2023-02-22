@@ -10,6 +10,7 @@ import com.moonlighthotel.hotelmanagementsystem.service.CarTransferService;
 import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,6 +25,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -36,6 +39,63 @@ public class CarTransferController {
 
     @Autowired
     private final CarTransferService carTransferService;
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Get car transfers list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CarTransferResponse.class)))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationFailErrorModel.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<List<CarTransferResponse>> findAll(@Parameter(description = "Car ID",
+            content = @Content(schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
+        List<CarTransfer> carTransfers = carTransferService.findAll(id);
+        List<CarTransferResponse> carTransferResponseList = carTransfers.stream()
+                .map(carTransferConverter::toCarTransferResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(carTransferResponseList);
+    }
+
+    @GetMapping(value = "/{tid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Show a car transfer by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CarTransferResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationFailErrorModel.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<CarTransferResponse> findById(@Parameter(description = "Car ID",
+            content = @Content(schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
+                                                        @Parameter(description = "Transfer ID",
+                                                                content = @Content(schema = @Schema(
+                                                                        type = "integer", format = "")))
+                                                        @PathVariable Long tid) {
+        CarTransfer carTransfer = carTransferService.findById(id, tid);
+        CarTransferResponse carTransferResponse = carTransferConverter.toCarTransferResponse(carTransfer);
+        return ResponseEntity.ok(carTransferResponse);
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'CLIENT')")
@@ -93,5 +153,28 @@ public class CarTransferController {
         return ResponseEntity.status(HttpStatus.OK).body(carTransferResponse);
     }
 
-
+    @DeleteMapping(value = "/{tid}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Remove a transfer by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content", content = {@Content(mediaType = "")}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "403", description = "Forbidden",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<HttpStatus> delete(@Parameter(description = "Car ID",
+            content = @Content(schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
+                                             @Parameter(description = "Transfer ID",
+                                                     content = @Content(schema = @Schema(
+                                                             type = "integer", format = "")))
+                                             @PathVariable Long tid) {
+        carTransferService.deleteById(id, tid);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
