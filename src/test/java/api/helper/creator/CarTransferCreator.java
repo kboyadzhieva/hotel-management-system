@@ -11,4 +11,9 @@ public class CarTransferCreator {
         String content = "classpath:createCarTransfer.json";
         return objectCreator.createObject(content, CarTransferRequest.class);
     }
+
+    public CarTransferRequest createCarTransferWithInvalidData() {
+        String content = "classpath:createCarTransferWithInvalidData.json";
+        return objectCreator.createObject(content, CarTransferRequest.class);
+    }
 }
