@@ -19,14 +19,14 @@ public class CarTransferBuilder {
                 .build();
     }
 
-    public CarTransfer build(Long tid, CarTransfer carTransfer) {
+    public CarTransfer build(Long tid, Car car, CarTransfer carTransfer) {
         return CarTransfer.builder()
                 .id(tid)
                 .date(carTransfer.getDate())
                 .seats(carTransfer.getSeats())
                 .created(carTransfer.getCreated())
-                .car(carTransfer.getCar())
-                .price(carTransfer.getPrice())
+                .car(car)
+                .price(car.getCarCategory().getPrice())
                 .user(carTransfer.getUser())
                 .build();
     }

@@ -60,7 +60,8 @@ public class CarTransferServiceImpl implements CarTransferService {
     public CarTransfer update(Long id, Long tid, CarTransfer carTransfer) {
         CarTransfer foundCarTransfer = findById(id, tid);
         carTransferValidator.validateCarTransfer(foundCarTransfer.getCar(), carTransfer);
-        CarTransfer builtCarTransfer = carTransferBuilder.build(foundCarTransfer.getId(), carTransfer);
+        CarTransfer builtCarTransfer = carTransferBuilder.build(foundCarTransfer.getId(),
+                foundCarTransfer.getCar(), carTransfer);
         return carTransferRepository.save(builtCarTransfer);
     }
 

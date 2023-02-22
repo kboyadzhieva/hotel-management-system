@@ -130,14 +130,14 @@ public class CarTransferServiceImplTest {
         CarTransfer carTransfer = CarTransfer.builder().id(tid).car(car).build();
 
         when(carTransferRepository.findById(any(Long.class))).thenReturn(Optional.of(carTransfer));
-        when(carTransferBuilder.build(any(Long.class), any(CarTransfer.class))).thenReturn(carTransfer);
+        when(carTransferBuilder.build(any(Long.class), any(Car.class), any(CarTransfer.class))).thenReturn(carTransfer);
 
         carTransferService.update(id, tid, carTransfer);
 
         verify(carTransferRepository, times(1)).findById(tid);
         verify(carTransferValidator, times(1))
                 .validateCarTransfer(carTransfer.getCar(), carTransfer);
-        verify(carTransferBuilder, times(1)).build(carTransfer.getCar().getId(), carTransfer);
+        verify(carTransferBuilder, times(1)).build(carTransfer.getId(), carTransfer.getCar(), carTransfer);
         verify(carTransferRepository, times(1)).save(carTransfer);
     }
 
