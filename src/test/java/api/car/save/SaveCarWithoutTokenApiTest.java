@@ -1,7 +1,7 @@
 package api.car.save;
 
 import api.helper.creator.CarCreator;
-import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarRequest;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;

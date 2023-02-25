@@ -1,7 +1,7 @@
 package api.helper.creator;
 
 import api.ObjectCreator;
-import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarRequest;
 
 public class CarCreator {
 

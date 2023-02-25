@@ -1,8 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.transfer.CarCategoryConverter;
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarCategoryRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.response.CarCategoryResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
@@ -44,7 +44,7 @@ public class CategoryController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CategoryResponse.class))}),
+                            schema = @Schema(implementation = CarCategoryResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationFailErrorModel.class))}),
@@ -54,11 +54,11 @@ public class CategoryController {
             @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<CategoryResponse> save(@RequestBody @Valid CategoryRequest categoryRequest) {
-        CarCategory carCategory = carCategoryConverter.toCategory(categoryRequest);
+    public ResponseEntity<CarCategoryResponse> save(@RequestBody @Valid CarCategoryRequest carCategoryRequest) {
+        CarCategory carCategory = carCategoryConverter.toCategory(carCategoryRequest);
         CarCategory savedCarCategory = categoryService.save(carCategory);
-        CategoryResponse categoryResponse = carCategoryConverter.toCategoryResponse(savedCarCategory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponse);
+        CarCategoryResponse carCategoryResponse = carCategoryConverter.toCategoryResponse(savedCarCategory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(carCategoryResponse);
     }
 
     @PutMapping(value = "/{id}")
@@ -68,7 +68,7 @@ public class CategoryController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CategoryResponse.class))}),
+                            schema = @Schema(implementation = CarCategoryResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationFailErrorModel.class))}),
@@ -81,13 +81,13 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Not Found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<CategoryResponse> update(@Parameter(description = "Category ID", content = @Content(
+    public ResponseEntity<CarCategoryResponse> update(@Parameter(description = "Category ID", content = @Content(
             schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
-                                                   @RequestBody @Valid CategoryRequest categoryRequest) {
-        CarCategory carCategory = carCategoryConverter.toCategory(categoryRequest);
+                                                      @RequestBody @Valid CarCategoryRequest carCategoryRequest) {
+        CarCategory carCategory = carCategoryConverter.toCategory(carCategoryRequest);
         CarCategory updatedCarCategory = categoryService.update(id, carCategory);
-        CategoryResponse categoryResponse = carCategoryConverter.toCategoryResponse(updatedCarCategory);
-        return ResponseEntity.status(HttpStatus.OK).body(categoryResponse);
+        CarCategoryResponse carCategoryResponse = carCategoryConverter.toCategoryResponse(updatedCarCategory);
+        return ResponseEntity.status(HttpStatus.OK).body(carCategoryResponse);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.dto.category;
+package com.moonlighthotel.hotelmanagementsystem.dto.transfer.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 @Builder
 @Getter
-public class CategoryRequest {
+public class CarCategoryRequest {
 
     @Length(min = 2, max = 255)
     @NotBlank(message = "A title is required. Please enter a title of the category.")

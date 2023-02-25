@@ -1,8 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.roomreservation.RoomConverter;
-import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;

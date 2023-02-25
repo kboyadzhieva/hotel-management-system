@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.dto.room.request;
+package com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

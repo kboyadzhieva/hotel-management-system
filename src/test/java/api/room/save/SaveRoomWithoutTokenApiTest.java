@@ -1,7 +1,7 @@
 package api.room.save;
 
 import api.helper.creator.RoomCreator;
-import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomRequest;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;

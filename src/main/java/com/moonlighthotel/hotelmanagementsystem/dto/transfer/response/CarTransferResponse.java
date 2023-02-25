@@ -1,6 +1,5 @@
 package com.moonlighthotel.hotelmanagementsystem.dto.transfer.response;
 
-import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

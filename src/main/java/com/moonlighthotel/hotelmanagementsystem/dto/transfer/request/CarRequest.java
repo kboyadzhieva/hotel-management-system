@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.dto.car.request;
+package com.moonlighthotel.hotelmanagementsystem.dto.transfer.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

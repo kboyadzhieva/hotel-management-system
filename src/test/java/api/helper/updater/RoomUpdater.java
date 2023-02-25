@@ -1,7 +1,7 @@
 package api.helper.updater;
 
 import api.ObjectCreator;
-import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomRequest;
 
 public class RoomUpdater {
 

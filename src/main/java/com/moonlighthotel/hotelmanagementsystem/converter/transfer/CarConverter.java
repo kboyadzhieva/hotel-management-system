@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.converter.transfer;
 
-import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.response.CarResponse;
 import com.moonlighthotel.hotelmanagementsystem.formatter.DateFormatter;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
