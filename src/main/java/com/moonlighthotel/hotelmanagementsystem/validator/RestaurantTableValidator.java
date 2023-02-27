@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RestaurantTableValidator {
+
     private static final String BAR = "bar";
     private static final String SALON = "salon";
     private static final String TERRACE = "terrace";

@@ -16,4 +16,14 @@ public class RestaurantTableBuilder {
                 .smoking(sectionType)
                 .build();
     }
+
+    public RestaurantTable build(Long id, RestaurantTable restaurantTable, SectionType sectionType) {
+        return RestaurantTable.builder()
+                .id(id)
+                .zone(restaurantTable.getZone())
+                .number(restaurantTable.getNumber())
+                .people(restaurantTable.getPeople())
+                .smoking(sectionType)
+                .build();
+    }
 }

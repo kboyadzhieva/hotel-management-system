@@ -35,7 +35,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     public RestaurantTable findById(Long id) {
         return restaurantTableRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(String
-                        .format("Table with id %d does not exist", id)));
+                        .format("Table with id %d does not exist.", id)));
     }
 
     @Override
@@ -47,8 +47,10 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     @Override
     public RestaurantTable update(Long id, RestaurantTable restaurantTable) {
+        RestaurantTable foundRestaurantTable = findById(id);
         SectionType sectionType = restaurantTableValidator.getSectionType(restaurantTable);
-        RestaurantTable builtRestaurantTable = restaurantTableBuilder.build(restaurantTable, sectionType);
+        RestaurantTable builtRestaurantTable = restaurantTableBuilder
+                .build(foundRestaurantTable.getId(), restaurantTable, sectionType);
         return restaurantTableRepository.save(builtRestaurantTable);
     }
 
