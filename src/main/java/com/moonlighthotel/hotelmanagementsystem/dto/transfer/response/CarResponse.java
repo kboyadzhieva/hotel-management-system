@@ -1,6 +1,5 @@
-package com.moonlighthotel.hotelmanagementsystem.dto.car.response;
+package com.moonlighthotel.hotelmanagementsystem.dto.transfer.response;
 
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,5 +27,5 @@ public class CarResponse {
 
     private String created;
 
-    private CategoryResponse category;
+    private CarCategoryResponse category;
 }

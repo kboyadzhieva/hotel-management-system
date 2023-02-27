@@ -1,23 +1,23 @@
 package com.moonlighthotel.hotelmanagementsystem.converter.transfer;
 
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.category.CategoryResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarCategoryRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.response.CarCategoryResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CarCategoryConverter {
 
-    public CarCategory toCategory(CategoryRequest categoryRequest) {
+    public CarCategory toCategory(CarCategoryRequest carCategoryRequest) {
         return CarCategory.builder()
-                .title(categoryRequest.getTitle())
-                .seats(categoryRequest.getSeats())
-                .price(categoryRequest.getPrice())
+                .title(carCategoryRequest.getTitle())
+                .seats(carCategoryRequest.getSeats())
+                .price(carCategoryRequest.getPrice())
                 .build();
     }
 
-    public CategoryResponse toCategoryResponse(CarCategory carCategory) {
-        return CategoryResponse.builder()
+    public CarCategoryResponse toCategoryResponse(CarCategory carCategory) {
+        return CarCategoryResponse.builder()
                 .id(carCategory.getId())
                 .title(carCategory.getTitle())
                 .seats(carCategory.getSeats())

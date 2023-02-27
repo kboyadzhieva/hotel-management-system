@@ -22,7 +22,7 @@ public class RestaurantTable {
     private Long id;
 
     @Column(nullable = false)
-    private ZoneType zoneType;
+    private ZoneType zone;
 
     @Column(nullable = false)
     private Integer number;
@@ -31,5 +31,5 @@ public class RestaurantTable {
     private Integer people;
 
     @Column(nullable = false)
-    private SectionType sectionType;
+    private SectionType smoking;
 }

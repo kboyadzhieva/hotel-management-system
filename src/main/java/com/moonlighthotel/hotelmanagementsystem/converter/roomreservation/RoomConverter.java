@@ -1,7 +1,7 @@
 package com.moonlighthotel.hotelmanagementsystem.converter.roomreservation;
 
-import com.moonlighthotel.hotelmanagementsystem.dto.room.request.RoomRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.room.response.RoomResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomResponse;
 import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

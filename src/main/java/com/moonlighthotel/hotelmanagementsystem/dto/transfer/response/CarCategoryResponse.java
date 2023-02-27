@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.dto.category;
+package com.moonlighthotel.hotelmanagementsystem.dto.transfer.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class CategoryResponse {
+public class CarCategoryResponse {
 
     private Long id;
 

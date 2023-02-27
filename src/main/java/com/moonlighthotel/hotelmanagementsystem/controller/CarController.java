@@ -1,8 +1,8 @@
 package com.moonlighthotel.hotelmanagementsystem.controller;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.transfer.CarConverter;
-import com.moonlighthotel.hotelmanagementsystem.dto.car.request.CarRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.car.response.CarResponse;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.transfer.response.CarResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.model.transfer.Car;
