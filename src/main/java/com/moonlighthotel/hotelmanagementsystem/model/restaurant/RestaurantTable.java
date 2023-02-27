@@ -24,7 +24,7 @@ public class RestaurantTable {
     @Column(nullable = false)
     private ZoneType zone;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer number;
 
     @Column(nullable = false)

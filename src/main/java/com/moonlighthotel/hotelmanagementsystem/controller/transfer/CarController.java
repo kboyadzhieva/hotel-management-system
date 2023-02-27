@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.controller;
+package com.moonlighthotel.hotelmanagementsystem.controller.transfer;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.transfer.CarConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarRequest;

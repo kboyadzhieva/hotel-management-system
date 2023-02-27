@@ -40,6 +40,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     @Override
     public RestaurantTable save(RestaurantTable restaurantTable) {
+        restaurantTableValidator.validateRestaurantTableForSave(restaurantTable);
         SectionType sectionType = restaurantTableValidator.getSectionType(restaurantTable);
         RestaurantTable builtRestaurantTable = restaurantTableBuilder.build(restaurantTable, sectionType);
         return restaurantTableRepository.save(builtRestaurantTable);

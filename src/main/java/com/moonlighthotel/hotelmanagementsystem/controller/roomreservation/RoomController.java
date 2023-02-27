@@ -1,15 +1,17 @@
-package com.moonlighthotel.hotelmanagementsystem.controller;
+package com.moonlighthotel.hotelmanagementsystem.controller.roomreservation;
 
-import com.moonlighthotel.hotelmanagementsystem.converter.transfer.CarCategoryConverter;
-import com.moonlighthotel.hotelmanagementsystem.dto.transfer.request.CarCategoryRequest;
-import com.moonlighthotel.hotelmanagementsystem.dto.transfer.response.CarCategoryResponse;
+import com.moonlighthotel.hotelmanagementsystem.converter.roomreservation.RoomConverter;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.request.RoomRequest;
+import com.moonlighthotel.hotelmanagementsystem.dto.roomreservation.response.RoomResponse;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.RecordNotFoundErrorModel;
 import com.moonlighthotel.hotelmanagementsystem.exception.model.ValidationFailErrorModel;
-import com.moonlighthotel.hotelmanagementsystem.model.transfer.CarCategory;
-import com.moonlighthotel.hotelmanagementsystem.service.CategoryService;
+import com.moonlighthotel.hotelmanagementsystem.filter.RoomFilter;
+import com.moonlighthotel.hotelmanagementsystem.model.roomreservation.Room;
+import com.moonlighthotel.hotelmanagementsystem.service.RoomService;
 import com.moonlighthotel.hotelmanagementsystem.swagger.SwaggerConfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,27 +26,64 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @RestController
-@RequestMapping(value = "/cars/categories")
-@Tag(name = SwaggerConfiguration.TRANSFER_TAG)
-public class CategoryController {
+@RequestMapping(value = "/rooms")
+@AllArgsConstructor
+@Tag(name = SwaggerConfiguration.ROOM_TAG)
+public class RoomController {
 
     @Autowired
-    private final CarCategoryConverter carCategoryConverter;
+    private final RoomService roomService;
 
     @Autowired
-    private final CategoryService categoryService;
+    private final RoomConverter roomConverter;
+
+    @GetMapping
+    @Operation(summary = "Get available rooms")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(mediaType = "application/json",
+            schema = @Schema(implementation = RoomFilter.class))})
+    @ApiResponse(responseCode = "200", description = "Successful operation",
+            content = {@Content(mediaType = "application/json",
+                    array = @ArraySchema(schema = @Schema(implementation = RoomResponse.class)))})
+    public ResponseEntity<List<RoomResponse>> findAll(RoomFilter roomFilter) {
+        List<Room> rooms = roomService.findAll(roomFilter);
+
+        List<RoomResponse> roomResponseList = rooms.stream()
+                .map(roomConverter::toRoomResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roomResponseList);
+    }
+
+    @GetMapping(value = "/{id}")
+    @Operation(summary = "Show a room by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RoomResponse.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationFailErrorModel.class))}),
+            @ApiResponse(responseCode = "404", description = "Not Found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
+    public ResponseEntity<RoomResponse> findById(@Parameter(description = "Room ID", content = @Content(
+            schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
+        Room foundRoom = roomService.findById(id);
+        RoomResponse roomResponse = roomConverter.toRoomResponse(foundRoom);
+        return ResponseEntity.ok(roomResponse);
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Create a new car category")
+    @Operation(summary = "Create a new room")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CarCategoryResponse.class))}),
+                            schema = @Schema(implementation = RoomResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationFailErrorModel.class))}),
@@ -54,21 +93,21 @@ public class CategoryController {
             @ApiResponse(responseCode = "403", description = "Forbidden",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<CarCategoryResponse> save(@RequestBody @Valid CarCategoryRequest carCategoryRequest) {
-        CarCategory carCategory = carCategoryConverter.toCategory(carCategoryRequest);
-        CarCategory savedCarCategory = categoryService.save(carCategory);
-        CarCategoryResponse carCategoryResponse = carCategoryConverter.toCategoryResponse(savedCarCategory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carCategoryResponse);
+    public ResponseEntity<RoomResponse> save(@RequestBody @Valid RoomRequest roomRequest) {
+        Room room = roomConverter.toRoom(roomRequest);
+        Room savedRoom = roomService.save(room);
+        RoomResponse roomResponse = roomConverter.toRoomResponse(savedRoom);
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomResponse);
     }
 
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Update car category by ID")
+    @Operation(summary = "Update a room by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CarCategoryResponse.class))}),
+                            schema = @Schema(implementation = RoomResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationFailErrorModel.class))}),
@@ -81,19 +120,18 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Not Found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<CarCategoryResponse> update(@Parameter(description = "Category ID", content = @Content(
+    public ResponseEntity<RoomResponse> update(@Parameter(description = "Room ID", content = @Content(
             schema = @Schema(type = "integer", format = ""))) @PathVariable Long id,
-                                                      @RequestBody @Valid CarCategoryRequest carCategoryRequest) {
-        CarCategory carCategory = carCategoryConverter.toCategory(carCategoryRequest);
-        CarCategory updatedCarCategory = categoryService.update(id, carCategory);
-        CarCategoryResponse carCategoryResponse = carCategoryConverter.toCategoryResponse(updatedCarCategory);
-        return ResponseEntity.status(HttpStatus.OK).body(carCategoryResponse);
+                                               @RequestBody @Valid RoomRequest roomRequest) {
+        Room room = roomConverter.toRoom(roomRequest);
+        Room updatedRoom = roomService.update(id, room);
+        RoomResponse roomResponse = roomConverter.toRoomResponse(updatedRoom);
+        return ResponseEntity.ok(roomResponse);
     }
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @SecurityRequirement(name = "bearerAuth")
-    @Operation(summary = "Remove a car category by ID")
+    @Operation(summary = "Remove a room by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No Content",
                     content = @Content(mediaType = "")),
@@ -106,9 +144,9 @@ public class CategoryController {
             @ApiResponse(responseCode = "404", description = "Not Found",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = RecordNotFoundErrorModel.class))})})
-    public ResponseEntity<HttpStatus> deleteById(@Parameter(description = "Category ID", content = @Content(
+    public ResponseEntity<HttpStatus> deleteById(@Parameter(description = "Room ID", content = @Content(
             schema = @Schema(type = "integer", format = ""))) @PathVariable Long id) {
-        categoryService.deleteById(id);
+        roomService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

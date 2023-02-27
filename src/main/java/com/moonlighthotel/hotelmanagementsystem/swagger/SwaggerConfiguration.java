@@ -15,8 +15,9 @@ import java.util.List;
 @SecurityScheme(name = "bearerAuth", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class SwaggerConfiguration {
 
-    public static final String ROOM_TAG = "Rooms";
     public static final String USER_TAG = "Users";
+    public static final String ROOM_TAG = "Rooms";
+    public static final String RESTAURANT_TAG = "Restaurant";
     public static final String TRANSFER_TAG = "Transfers";
 
     @Bean
@@ -27,7 +28,10 @@ public class SwaggerConfiguration {
                         .description("API Documentation")
                         .version("1.0.0"))
                 .tags(List.of(
+                        new Tag().name(USER_TAG).description("Actions with Users"),
                         new Tag().name(ROOM_TAG).description("Actions with Rooms"),
-                        new Tag().name(USER_TAG).description("Actions with Users")));
+                        new Tag().name(RESTAURANT_TAG).description("Actions with Restaurant tables"),
+                        new Tag().name(TRANSFER_TAG).description("Actions with Transfers")
+                ));
     }
 }

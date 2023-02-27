@@ -1,4 +1,4 @@
-package com.moonlighthotel.hotelmanagementsystem.controller;
+package com.moonlighthotel.hotelmanagementsystem.controller.user;
 
 import com.moonlighthotel.hotelmanagementsystem.converter.user.UserConverter;
 import com.moonlighthotel.hotelmanagementsystem.dto.user.response.UserResponse;

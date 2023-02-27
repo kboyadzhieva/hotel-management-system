@@ -110,6 +110,7 @@ public class RestaurantTableServiceImplTest {
 
         restaurantTableService.save(restaurantTable);
 
+        verify(restaurantTableValidator, times(1)).validateRestaurantTableForSave(restaurantTable);
         verify(restaurantTableValidator, times(1)).getSectionType(restaurantTable);
         verify(restaurantTableBuilder, times(1)).build(restaurantTable, sectionType);
         verify(restaurantTableRepository, times(1)).save(restaurantTable);
