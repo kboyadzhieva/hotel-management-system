@@ -23,7 +23,7 @@ public class RestaurantTableConverter {
                 .zone(restaurantTable.getZone().name().toLowerCase())
                 .number(restaurantTable.getNumber())
                 .people(restaurantTable.getPeople())
-                .smoking(restaurantTable.getSmoking().ordinal())
+                .smoking(restaurantTable.getSmoking().getValue())
                 .build();
     }
 }
